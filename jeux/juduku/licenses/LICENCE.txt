@@ -1,5 +1,0 @@
-Juduku — jeu original créé pour PartyHub.
-
-Auteur : matosman40
-Ressources tierces : aucune (ni image, ni police, ni son).
-Licence : non précisée par l'auteur à la création de cette version (tous droits réservés par défaut).
