@@ -1,0 +1,33 @@
+{
+  "name": "Juduku",
+  "description": "Un parcours au dé : avancez case après case, évitez les pièges et ramassez les trésors.",
+  "icon": "🎲",
+  "theme": "classique",
+  "cells": [
+    { "label": "Départ", "kind": "normal", "value": 0 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Tremplin", "kind": "avance", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Glissade", "kind": "recule", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Piège", "kind": "perte", "value": 1 },
+    { "label": "Trésor", "kind": "gain", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Filet", "kind": "passe", "value": 0 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Élan", "kind": "avance", "value": 1 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Ceinture", "kind": "gain", "value": 3 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Arrivée", "kind": "arrivee", "value": 0 }
+  ],
+  "rules": { "minPlayers": 2, "maxPlayers": 6, "dice": 1, "turnSeconds": 30 },
+  "notice": {
+    "goal": "Être le premier arrivé sur la dernière case.",
+    "steps": [
+      "Lancer le dé à votre tour et avancer du nombre de cases obtenu.",
+      "Appliquer l’effet de la case sur laquelle vous vous arrêtez."
+    ],
+    "tips": ["Les cases Trésor et Ceinture rapportent des points, utiles en cas d’égalité."]
+  }
+}

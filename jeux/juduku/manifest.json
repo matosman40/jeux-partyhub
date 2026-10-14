@@ -1,0 +1,15 @@
+{
+  "format": "phgame",
+  "formatVersion": 2,
+  "id": "juduku",
+  "name": "Juduku",
+  "version": "1.0.0",
+  "description": "Un parcours au dé : avancez case après case, évitez les pièges et ramassez les trésors.",
+  "author": "matosman40",
+  "kind": "declarative",
+  "engine": { "minVersion": "0.7.0", "api": 1 },
+  "requires": { "modules": ["board"] },
+  "entry": "game/definition.json",
+  "licenses": [{ "path": "licenses/LICENCE.txt", "covers": [] }],
+  "files": []
+}
