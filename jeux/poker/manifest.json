@@ -1,0 +1,15 @@
+{
+  "format": "phgame",
+  "formatVersion": 2,
+  "id": "poker",
+  "name": "Poker",
+  "version": "1.0.0",
+  "description": "Un parcours au dé façon table de poker : avancez case après case, misez sur les bons coups et évitez les mauvais.",
+  "author": "matosman40",
+  "kind": "declarative",
+  "engine": { "minVersion": "0.7.0", "api": 1 },
+  "requires": { "modules": ["board"] },
+  "entry": "game/definition.json",
+  "licenses": [{ "path": "licenses/LICENCE.txt", "covers": [] }],
+  "files": []
+}

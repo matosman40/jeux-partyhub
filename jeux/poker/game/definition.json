@@ -1,0 +1,33 @@
+{
+  "name": "Poker",
+  "description": "Un parcours au dé façon table de poker. Avancez case après case, gagnez des pots et évitez les bluffs ratés.",
+  "icon": "🃏",
+  "theme": "nuit",
+  "cells": [
+    { "label": "Départ", "kind": "normal", "value": 0 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Petite blinde", "kind": "avance", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Bluff raté", "kind": "recule", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Jeton perdu", "kind": "perte", "value": 1 },
+    { "label": "Pot", "kind": "gain", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Check", "kind": "passe", "value": 0 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Coup de chance", "kind": "avance", "value": 1 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Gros pot", "kind": "gain", "value": 3 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Arrivée", "kind": "arrivee", "value": 0 }
+  ],
+  "rules": { "minPlayers": 2, "maxPlayers": 6, "dice": 1, "turnSeconds": 30 },
+  "notice": {
+    "goal": "Être le premier arrivé sur la dernière case.",
+    "steps": [
+      "Lancer le dé à votre tour et avancer du nombre de cases obtenu.",
+      "Appliquer l’effet de la case sur laquelle vous vous arrêtez."
+    ],
+    "tips": ["Les cases Pot et Gros pot rapportent des points, utiles en cas d’égalité."]
+  }
+}
