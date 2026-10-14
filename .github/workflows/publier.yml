@@ -1,0 +1,63 @@
+name: Publier un jeu
+
+# Déclenché par un tag `<jeu>-vX.Y.Z` (exemple : frontieres-v1.2.0).
+# Le jeu est le dossier jeux/<jeu>/ ; le numéro du tag doit égaler `version` du manifeste.
+on:
+  push:
+    tags: ['*-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lire le tag
+        id: tag
+        run: |
+          GAME="${GITHUB_REF_NAME%-v*}"
+          VERSION="${GITHUB_REF_NAME##*-v}"
+          if [[ ! "$GAME" =~ ^[a-z0-9][a-z0-9-]{1,47}$ ]]; then
+            echo "Identifiant de jeu invalide : $GAME" >&2; exit 1
+          fi
+          echo "game=$GAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+
+      - name: Vérifier le dossier et la version
+        run: |
+          test -f "jeux/${{ steps.tag.outputs.game }}/manifest.json" || { echo "Dossier jeux/${{ steps.tag.outputs.game }} introuvable." >&2; exit 1; }
+          MANIFEST_ID=$(jq -r .id "jeux/${{ steps.tag.outputs.game }}/manifest.json")
+          MANIFEST_VERSION=$(jq -r .version "jeux/${{ steps.tag.outputs.game }}/manifest.json")
+          [ "$MANIFEST_ID" = "${{ steps.tag.outputs.game }}" ] || { echo "L'identifiant du manifeste ($MANIFEST_ID) doit être ${{ steps.tag.outputs.game }}." >&2; exit 1; }
+          [ "$MANIFEST_VERSION" = "${{ steps.tag.outputs.version }}" ] || { echo "Le tag annonce ${{ steps.tag.outputs.version }}, le manifeste $MANIFEST_VERSION." >&2; exit 1; }
+
+      - name: Préparer PartyHub
+        run: |
+          git clone --depth 1 --branch "${{ vars.PARTYHUB_REF || 'version-0.7.0' }}" https://github.com/matosman40/Partyhub.git "$RUNNER_TEMP/partyhub"
+          cd "$RUNNER_TEMP/partyhub"
+          npm ci --ignore-scripts
+          npm run build -w @partyhub/shared
+          npm run build -w @partyhub/games
+          npm run build -w @partyhub/server
+
+      - name: Construire et vérifier le paquet
+        run: |
+          GAME="${{ steps.tag.outputs.game }}"
+          node "$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js" pack "$GITHUB_WORKSPACE/jeux/$GAME" "$RUNNER_TEMP/$GAME.phgame"
+          node "$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js" check "$RUNNER_TEMP/$GAME.phgame"
+
+      - name: Empreinte
+        run: |
+          cd "$RUNNER_TEMP"
+          sha256sum "${{ steps.tag.outputs.game }}.phgame" > "${{ steps.tag.outputs.game }}.phgame.sha256"
+
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          GAME="${{ steps.tag.outputs.game }}"
+          cd "$RUNNER_TEMP"
+          gh release create "$GITHUB_REF_NAME" "$GAME.phgame" "$GAME.phgame.sha256" --title "$GAME ${{ steps.tag.outputs.version }}" --generate-notes
