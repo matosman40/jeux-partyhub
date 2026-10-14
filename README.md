@@ -36,6 +36,10 @@ version.
 Dans l'administration, section **Sources GitHub**, indiquez `auteur/jeux-partyhub/<jeu>`. PartyHub installe la version la
 plus haute du jeu, et la met à jour à la demande ou une fois par jour.
 
+## Jeux intégrés à PartyHub
+
+Certains jeux sont écrits directement dans le code de PartyHub : ils n'ont pas de dossier ici et ne publient pas de release. Le Poker (Texas hold'em) en fait partie. Son code se trouve dans le dépôt PartyHub, dans `packages/games/src/poker`, et il est désactivé par défaut dans une installation neuve.
+
 ## Réglages
 
 - `PARTYHUB_REF` (variable du dépôt) : branche ou tag de PartyHub utilisé pour contrôler les paquets. Par défaut
