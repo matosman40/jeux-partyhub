@@ -1,0 +1,15 @@
+{
+  "format": "phgame",
+  "formatVersion": 2,
+  "id": "parcours-des-questions",
+  "name": "Parcours des questions",
+  "version": "1.0.0",
+  "description": "Un parcours au dé où les cases Question font avancer : la première arrivée gagne.",
+  "author": "matosman40",
+  "kind": "declarative",
+  "engine": { "minVersion": "0.7.0", "api": 1 },
+  "requires": { "modules": ["board"] },
+  "entry": "game/definition.json",
+  "licenses": [{ "path": "licenses/LICENCE.txt", "covers": [] }],
+  "files": []
+}

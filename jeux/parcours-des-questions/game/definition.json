@@ -1,0 +1,37 @@
+{
+  "name": "Parcours des questions",
+  "description": "Un parcours au dé où les cases Question font avancer : la première arrivée gagne.",
+  "icon": "❓",
+  "theme": "nuit",
+  "cells": [
+    { "label": "Départ", "kind": "normal", "value": 0 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Question", "kind": "avance", "value": 1 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Piège", "kind": "recule", "value": 1 },
+    { "label": "Question", "kind": "avance", "value": 1 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Filet", "kind": "passe", "value": 0 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Question", "kind": "avance", "value": 1 },
+    { "label": "Glissade", "kind": "recule", "value": 2 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Question", "kind": "avance", "value": 1 },
+    { "label": "", "kind": "normal", "value": 0 },
+    { "label": "Question", "kind": "avance", "value": 1 },
+    { "label": "Arrivée", "kind": "arrivee", "value": 0 }
+  ],
+  "rules": { "minPlayers": 3, "maxPlayers": 8, "dice": 1, "turnSeconds": 8 },
+  "notice": {
+    "goal": "Être le premier arrivé sur la case Arrivée.",
+    "steps": [
+      "Lancer le dé à votre tour et avancer du nombre de cases obtenu.",
+      "Sur une case Question, répondez à une question de votre choix : la case vous fait avancer d’une case.",
+      "Appliquer l’effet de la case où vous vous arrêtez."
+    ],
+    "tips": [
+      "Chaque tour dure 8 secondes : au-delà, le dé est lancé automatiquement.",
+      "Variante simplifiée : pas de juge ni de cartes. Les questions sont à trouver entre vous."
+    ]
+  }
+}

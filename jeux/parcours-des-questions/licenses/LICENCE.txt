@@ -1,0 +1,6 @@
+Parcours des questions : jeu original créé pour PartyHub.
+
+Auteur : matosman40
+Inspiration : mécanique générale d'un jeu d'ambiance existant (réponse chronométrée, rôle de juge qui tourne, premier à atteindre un score). Aucun texte, aucune carte, aucune question d'un jeu commercial n'est repris.
+Ressources tierces : aucune (ni image, ni police, ni son).
+Licence : non précisée par l'auteur (tous droits réservés par défaut).
