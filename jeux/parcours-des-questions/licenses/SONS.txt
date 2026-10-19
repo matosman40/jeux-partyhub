@@ -6,4 +6,5 @@ Sons du jeu (dossier assets/sons/), et leur origine.
 - sfx-explode, sfx-crate, sfx-die, sfx-win, sfx-start, sfx-final, sfx-card, sfx-chip, musique-partie : synthétisés pour
   PartyHub par sons/outils/synthese.py (dépôt jeux-partyhub), sans fichier source externe. sfx-card et sfx-chip sont
   provisoires : ils seront remplacés par des sons du pack casino (CC0).
-- Droits des sons synthétisés : ceux du jeu, voir LICENCE.txt.
+- Sons synthétisés : CC0 1.0 (domaine public), https://creativecommons.org/publicdomain/zero/1.0/.
+  Aucune attribution obligatoire.

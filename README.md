@@ -51,5 +51,5 @@ L'inventaire complet des jeux de PartyHub, avec ce qui peut ou non devenir un pa
 ## Réglages
 
 - `PARTYHUB_REF` (variable du dépôt) : branche ou tag de PartyHub utilisé pour contrôler les paquets. Par défaut
-  `v0.11.0`. Les paquets de format 4 (sons) demandent PartyHub 0.13.0 : réglez la variable sur ce tag une fois publié,
+  `v0.11.0`. Les paquets de format 4 (sons) demandent PartyHub 0.14.0 : réglez la variable sur ce tag une fois publié,
   sinon ces paquets sont refusés. Une valeur qui n'existe pas fait échouer toutes les publications.

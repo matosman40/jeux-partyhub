@@ -35,7 +35,7 @@ déposé.
 ## Licences
 
 - **Kenney Interface Sounds** : CC0 1.0, dépôt [Calinou/kenney-interface-sounds](https://github.com/Calinou/kenney-interface-sounds), fichier `LICENSE.txt`. Usage commercial libre. Créditer Kenney n'est pas obligatoire.
-- **Sons synthétisés** : produits par `outils/synthese.py`, sans fichier source externe. La licence reste à décider avant publication : le dépôt n'en indique pas encore.
+- **Sons synthétisés** : produits par `outils/synthese.py`, sans fichier source externe. Licence CC0 1.0 (domaine public), choisie le 19 octobre 2026 : usage libre, sans attribution obligatoire.
 
 ## Régénérer les sons synthétisés
 

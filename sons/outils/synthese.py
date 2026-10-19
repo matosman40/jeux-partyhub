@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Synthétise les sons de PartyHub qui n'ont pas de source libre : huit bruitages et trois musiques.
 
-Aucun fichier source n'est utilisé : tous les sons sont calculés ici. Ils sont donc reproductibles et sous la
-même licence que le dépôt. Les six bruitages issus du pack Kenney (CC0) ne sont pas produits par ce script.
+Aucun fichier source n'est utilisé : tous les sons sont calculés ici. Ils sont donc reproductibles et sous licence CC0 1.0 (domaine public). Les six bruitages issus du pack Kenney (CC0) ne sont pas produits par ce script.
 
 Usage, depuis la racine du dépôt :
     python3 sons/outils/synthese.py
