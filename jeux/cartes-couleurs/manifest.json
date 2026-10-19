@@ -1,0 +1,54 @@
+{
+  "format": "phgame",
+  "formatVersion": 4,
+  "id": "cartes-couleurs",
+  "name": "Couleurs & chiffres",
+  "version": "1.0.0",
+  "description": "Le classique : suivez la couleur ou le chiffre, et videz votre main le premier. Version de paquet du jeu intégré à PartyHub.",
+  "author": "matosman40",
+  "kind": "declarative",
+  "engine": {
+    "minVersion": "0.14.0",
+    "api": 1
+  },
+  "requires": {
+    "modules": [
+      "cards"
+    ]
+  },
+  "entry": "game/definition.json",
+  "licenses": [
+    {
+      "path": "licenses/LICENCE.txt",
+      "covers": []
+    },
+    {
+      "path": "licenses/SONS.txt",
+      "covers": [
+        "assets/sons/musique-partie.ogg",
+        "assets/sons/sfx-card.ogg",
+        "assets/sons/sfx-chip.ogg",
+        "assets/sons/sfx-click.ogg",
+        "assets/sons/sfx-crate.ogg",
+        "assets/sons/sfx-die.ogg",
+        "assets/sons/sfx-draw.ogg",
+        "assets/sons/sfx-explode.ogg",
+        "assets/sons/sfx-final.ogg",
+        "assets/sons/sfx-hit.ogg",
+        "assets/sons/sfx-pickup.ogg",
+        "assets/sons/sfx-place.ogg",
+        "assets/sons/sfx-start.ogg",
+        "assets/sons/sfx-turn.ogg",
+        "assets/sons/sfx-win.ogg"
+      ]
+    },
+    {
+      "path": "licenses/VIGNETTE.txt",
+      "covers": [
+        "assets/cover.png"
+      ]
+    }
+  ],
+  "files": [],
+  "cover": "assets/cover.png"
+}

@@ -1,0 +1,3 @@
+Vignette assets/cover.png : générée par vignettes/generer.py (dépôt jeux-partyhub) à partir de
+vignettes/<jeu>.json, ou produite par un générateur d'images à partir de vignettes/<jeu>.prompt.txt.
+Droits : ceux du jeu, voir LICENCE.txt.

@@ -1,0 +1,10 @@
+{
+  "titre": "Parcours des questions",
+  "sous_titre": "Un parcours au dé : la première arrivée gagne.",
+  "couleurs": [
+    "#5b3fa6",
+    "#2a1a4d"
+  ],
+  "accent": "#ffd23f",
+  "motif": "parcours"
+}

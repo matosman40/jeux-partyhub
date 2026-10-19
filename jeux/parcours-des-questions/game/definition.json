@@ -4,24 +4,93 @@
   "icon": "❓",
   "theme": "nuit",
   "cells": [
-    { "label": "Départ", "kind": "normal", "value": 0 },
-    { "label": "", "kind": "normal", "value": 0 },
-    { "label": "Question", "kind": "avance", "value": 1 },
-    { "label": "", "kind": "normal", "value": 0 },
-    { "label": "Piège", "kind": "recule", "value": 1 },
-    { "label": "Question", "kind": "avance", "value": 1 },
-    { "label": "", "kind": "normal", "value": 0 },
-    { "label": "Filet", "kind": "passe", "value": 0 },
-    { "label": "", "kind": "normal", "value": 0 },
-    { "label": "Question", "kind": "avance", "value": 1 },
-    { "label": "Glissade", "kind": "recule", "value": 2 },
-    { "label": "", "kind": "normal", "value": 0 },
-    { "label": "Question", "kind": "avance", "value": 1 },
-    { "label": "", "kind": "normal", "value": 0 },
-    { "label": "Question", "kind": "avance", "value": 1 },
-    { "label": "Arrivée", "kind": "arrivee", "value": 0 }
+    {
+      "label": "Départ",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "Question",
+      "kind": "avance",
+      "value": 1
+    },
+    {
+      "label": "",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "Piège",
+      "kind": "recule",
+      "value": 1
+    },
+    {
+      "label": "Question",
+      "kind": "avance",
+      "value": 1
+    },
+    {
+      "label": "",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "Filet",
+      "kind": "passe",
+      "value": 0
+    },
+    {
+      "label": "",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "Question",
+      "kind": "avance",
+      "value": 1
+    },
+    {
+      "label": "Glissade",
+      "kind": "recule",
+      "value": 2
+    },
+    {
+      "label": "",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "Question",
+      "kind": "avance",
+      "value": 1
+    },
+    {
+      "label": "",
+      "kind": "normal",
+      "value": 0
+    },
+    {
+      "label": "Question",
+      "kind": "avance",
+      "value": 1
+    },
+    {
+      "label": "Arrivée",
+      "kind": "arrivee",
+      "value": 0
+    }
   ],
-  "rules": { "minPlayers": 3, "maxPlayers": 8, "dice": 1, "turnSeconds": 8 },
+  "rules": {
+    "minPlayers": 3,
+    "maxPlayers": 8,
+    "dice": 1,
+    "turnSeconds": 8
+  },
   "notice": {
     "goal": "Être le premier arrivé sur la case Arrivée.",
     "steps": [
@@ -33,5 +102,26 @@
       "Chaque tour dure 8 secondes : au-delà, le dé est lancé automatiquement.",
       "Variante simplifiée : pas de juge ni de cartes. Les questions sont à trouver entre vous."
     ]
+  },
+  "sons": {
+    "sfx": {
+      "place": "assets/sons/sfx-place.ogg",
+      "explode": "assets/sons/sfx-explode.ogg",
+      "crate": "assets/sons/sfx-crate.ogg",
+      "pickup": "assets/sons/sfx-pickup.ogg",
+      "die": "assets/sons/sfx-die.ogg",
+      "hit": "assets/sons/sfx-hit.ogg",
+      "start": "assets/sons/sfx-start.ogg",
+      "win": "assets/sons/sfx-win.ogg",
+      "final": "assets/sons/sfx-final.ogg",
+      "click": "assets/sons/sfx-click.ogg",
+      "card": "assets/sons/sfx-card.ogg",
+      "draw": "assets/sons/sfx-draw.ogg",
+      "turn": "assets/sons/sfx-turn.ogg",
+      "chip": "assets/sons/sfx-chip.ogg"
+    },
+    "music": {
+      "partie": "assets/sons/musique-partie.ogg"
+    }
   }
 }

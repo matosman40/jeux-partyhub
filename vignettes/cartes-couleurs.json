@@ -1,0 +1,10 @@
+{
+  "titre": "Couleurs & chiffres",
+  "sous_titre": "Suivez la couleur ou le chiffre, et videz votre main le premier.",
+  "couleurs": [
+    "#1f6f4a",
+    "#0c3a26"
+  ],
+  "accent": "#f2c14e",
+  "motif": "cartes"
+}
