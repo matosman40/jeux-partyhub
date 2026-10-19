@@ -11,6 +11,7 @@ jeux/
 └── <jeu>/            un jeu : manifest.json, game/definition.json, assets/, licenses/
 sons/                 bruitages et musiques, copiés dans les paquets (assets/sons/), voir sons/README.md
 vignettes/            vignettes des jeux (réglages et prompts), voir vignettes/README.md
+jeux-integres/        fiches (règles et informations, sans code) des jeux écrits dans PartyHub, voir jeux-integres/README.md
 ```
 
 ## Ajouter un jeu
@@ -50,6 +51,8 @@ La plupart des jeux de PartyHub sont écrits directement dans le code de l'appli
 Le dossier `poker` de ce dépôt est un autre jeu : un parcours au dé, sans lien avec le Poker Texas.
 
 Deux jeux de cartes intégrés ont aussi un paquet ici, `cartes-couleurs` (Couleurs & chiffres) et `cartes-coco` (Blanc-manger coco). Ce sont des doublons des jeux intégrés, utiles comme modèles à copier.
+
+Une fiche par jeu intégré, avec le but, le déroulement, les conseils, le nombre de joueurs et le journal de versions, est dans [`jeux-integres/`](jeux-integres/README.md). Ce sont des fiches de texte : le code reste dans PartyHub.
 
 L'inventaire complet des jeux de PartyHub, avec ce qui peut ou non devenir un paquet, est dans `recherche/inventaire-jeux.md`.
 
