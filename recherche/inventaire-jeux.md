@@ -7,7 +7,7 @@
 - 33 jeux dans le registre.
 - 2 peuvent devenir des paquets : les deux jeux de cartes dont la définition est une donnée. Ils sont préparés dans ce dépôt.
 - 31 ont leurs règles écrites dans le code. Les convertir reviendrait à réécrire chaque jeu dans le format déclaratif. Le format JavaScript, qui permettrait de les livrer comme paquets, n’est pas implémenté.
-- Deux paquets existent déjà ici : `poker` (parcours au dé, sans lien avec le Poker Texas) et `parcours-des-questions`. Ils sont validés avec le moteur v0.11.0.
+- Quatre paquets sont ici : `cartes-couleurs`, `cartes-coco`, `poker` (parcours au dé, sans lien avec le Poker Texas) et `parcours-des-questions`. Ils ont leurs sons et une vignette, et sont validés avec le moteur 0.14.0 (version non encore publiée).
 
 ## Tous les jeux
 
