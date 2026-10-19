@@ -18,7 +18,7 @@ vignettes/            vignettes des jeux (réglages et prompts), voir vignettes/
 1. Copiez `jeux/_modele` vers `jeux/<jeu>` (identifiant en minuscules, chiffres et tirets).
 2. Remplissez `manifest.json` : `id` identique au nom du dossier, `version`, `name`, `description`, `author`.
 3. Modifiez `game/definition.json` et `licenses/LICENCE.txt`.
-4. Vérifiez localement avec `phgame pack` et `phgame check` (voir `docs/PUBLIER-UN-JEU.md` du dépôt PartyHub).
+4. Vérifiez localement avec `phgame pack` et `phgame check` (voir [docs/PUBLIER-UN-JEU.md](https://github.com/matosman40/Partyhub/blob/main/docs/PUBLIER-UN-JEU.md) du dépôt PartyHub).
 
 ## Publier une version
 

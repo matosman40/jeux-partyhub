@@ -12,6 +12,7 @@ déposez le résultat à la place de jeux/<jeu>/assets/cover.png (PNG, 640 × 36
 """
 
 import json
+import os
 import pathlib
 import sys
 import textwrap
@@ -20,8 +21,26 @@ from PIL import Image, ImageDraw, ImageFont
 
 LARGEUR, HAUTEUR = 640, 360
 RACINE = pathlib.Path(__file__).resolve().parent.parent
-POLICE_GRASSE = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-POLICE = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+POLICES_GRASSES = [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",  # Linux (paquet fonts-dejavu-core)
+    "/Library/Fonts/DejaVuSans-Bold.ttf",  # macOS, DejaVu installé à la main
+    "C:/Windows/Fonts/arialbd.ttf",  # Windows, repli
+    "/System/Library/Fonts/Supplemental/Arial Bold.ttf",  # macOS, repli
+]
+POLICES = [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/Library/Fonts/DejaVuSans.ttf",
+    "C:/Windows/Fonts/arial.ttf",
+    "/System/Library/Fonts/Supplemental/Arial.ttf",
+]
+
+
+def trouver_police(candidates: list[str]) -> str:
+    """Premier fichier de police présent. Les vignettes ont été vérifiées avec DejaVu Sans."""
+    for chemin in candidates:
+        if os.path.exists(chemin):
+            return chemin
+    raise SystemExit("Police introuvable : installez DejaVu Sans (Debian/Ubuntu : paquet fonts-dejavu-core).")
 
 
 def couleur(hexa):
@@ -101,8 +120,8 @@ def rendre(config):
     img = fond(haut, bas)
     d = ImageDraw.Draw(img)
     MOTIFS[config["motif"]](d, accent)
-    titre_police = ImageFont.truetype(POLICE_GRASSE, 46)
-    sous_police = ImageFont.truetype(POLICE, 22)
+    titre_police = ImageFont.truetype(trouver_police(POLICES_GRASSES), 46)
+    sous_police = ImageFont.truetype(trouver_police(POLICES), 22)
     y = 50
     for ligne in retour_ligne(config["titre"], titre_police, 320):
         d.text((40, y), ligne, font=titre_police, fill=(255, 255, 255))
