@@ -38,9 +38,15 @@ plus haute du jeu, et la met à jour à la demande ou une fois par jour.
 
 ## Jeux intégrés à PartyHub
 
-Certains jeux sont écrits directement dans le code de PartyHub : ils n'ont pas de dossier ici et ne publient pas de release. Le Poker (Texas hold'em) en fait partie. Son code se trouve dans le dépôt PartyHub, dans `packages/games/src/poker`, et il est désactivé par défaut dans une installation neuve.
+La plupart des jeux de PartyHub sont écrits directement dans le code de l'application : ils n'ont pas de dossier ici et ne publient pas de release. C'est le cas du Poker Texas (hold'em), dont le code se trouve dans le dépôt PartyHub, dans `packages/games/src/poker`, et qui est désactivé par défaut dans une installation neuve.
+
+Le dossier `poker` de ce dépôt est un autre jeu : un parcours au dé, sans lien avec le Poker Texas.
+
+Deux jeux de cartes intégrés ont aussi un paquet ici, `cartes-couleurs` (Couleurs & chiffres) et `cartes-coco` (Blanc-manger coco). Ce sont des doublons des jeux intégrés, utiles comme modèles à copier.
+
+L'inventaire complet des jeux de PartyHub, avec ce qui peut ou non devenir un paquet, est dans `recherche/inventaire-jeux.md`.
 
 ## Réglages
 
 - `PARTYHUB_REF` (variable du dépôt) : branche ou tag de PartyHub utilisé pour contrôler les paquets. Par défaut
-  `version-0.7.0`.
+  `v0.11.0`, le dernier tag publié. Une valeur qui n'existe pas fait échouer toutes les publications.

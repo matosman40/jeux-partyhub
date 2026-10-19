@@ -1,0 +1,27 @@
+{
+  "format": "phgame",
+  "formatVersion": 1,
+  "id": "cartes-coco",
+  "name": "Blanc-manger coco",
+  "version": "1.0.0",
+  "description": "Une version gourmande et tropicale, à cinq joueurs maximum. Version de paquet du jeu intégré à PartyHub.",
+  "author": "matosman40",
+  "kind": "declarative",
+  "engine": {
+    "minVersion": "0.11.0",
+    "api": 1
+  },
+  "requires": {
+    "modules": [
+      "cards"
+    ]
+  },
+  "entry": "game/definition.json",
+  "licenses": [
+    {
+      "path": "licenses/LICENCE.txt",
+      "covers": []
+    }
+  ],
+  "files": []
+}

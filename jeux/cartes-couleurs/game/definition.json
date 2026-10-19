@@ -1,0 +1,538 @@
+{
+  "name": "Couleurs & chiffres",
+  "description": "Le classique : suivez la couleur ou le chiffre, et videz votre main le premier.",
+  "icon": "🌈",
+  "theme": "arcade",
+  "families": [
+    {
+      "id": "r",
+      "label": "Rouge",
+      "color": "#ff4d5a"
+    },
+    {
+      "id": "j",
+      "label": "Jaune",
+      "color": "#ffc83d"
+    },
+    {
+      "id": "v",
+      "label": "Vert",
+      "color": "#3fd27a"
+    },
+    {
+      "id": "b",
+      "label": "Bleu",
+      "color": "#3f8cff"
+    }
+  ],
+  "cards": [
+    {
+      "id": "r0",
+      "label": "Rouge 0",
+      "symbol": "0",
+      "family": "r",
+      "effect": "none",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "id": "r1",
+      "label": "Rouge 1",
+      "symbol": "1",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "r2",
+      "label": "Rouge 2",
+      "symbol": "2",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "r3",
+      "label": "Rouge 3",
+      "symbol": "3",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "r4",
+      "label": "Rouge 4",
+      "symbol": "4",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "r5",
+      "label": "Rouge 5",
+      "symbol": "5",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "r6",
+      "label": "Rouge 6",
+      "symbol": "6",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "r7",
+      "label": "Rouge 7",
+      "symbol": "7",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 7
+    },
+    {
+      "id": "r8",
+      "label": "Rouge 8",
+      "symbol": "8",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 8
+    },
+    {
+      "id": "r9",
+      "label": "Rouge 9",
+      "symbol": "9",
+      "family": "r",
+      "effect": "none",
+      "count": 2,
+      "points": 9
+    },
+    {
+      "id": "rsk",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "r",
+      "effect": "skip",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "rrv",
+      "label": "Inversion",
+      "symbol": "⇄",
+      "family": "r",
+      "effect": "reverse",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "rp2",
+      "label": "Rouge +2",
+      "symbol": "+2",
+      "family": "r",
+      "effect": "draw2",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "j0",
+      "label": "Jaune 0",
+      "symbol": "0",
+      "family": "j",
+      "effect": "none",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "id": "j1",
+      "label": "Jaune 1",
+      "symbol": "1",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "j2",
+      "label": "Jaune 2",
+      "symbol": "2",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "j3",
+      "label": "Jaune 3",
+      "symbol": "3",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "j4",
+      "label": "Jaune 4",
+      "symbol": "4",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "j5",
+      "label": "Jaune 5",
+      "symbol": "5",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "j6",
+      "label": "Jaune 6",
+      "symbol": "6",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "j7",
+      "label": "Jaune 7",
+      "symbol": "7",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 7
+    },
+    {
+      "id": "j8",
+      "label": "Jaune 8",
+      "symbol": "8",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 8
+    },
+    {
+      "id": "j9",
+      "label": "Jaune 9",
+      "symbol": "9",
+      "family": "j",
+      "effect": "none",
+      "count": 2,
+      "points": 9
+    },
+    {
+      "id": "jsk",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "j",
+      "effect": "skip",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "jrv",
+      "label": "Inversion",
+      "symbol": "⇄",
+      "family": "j",
+      "effect": "reverse",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "jp2",
+      "label": "Jaune +2",
+      "symbol": "+2",
+      "family": "j",
+      "effect": "draw2",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "v0",
+      "label": "Vert 0",
+      "symbol": "0",
+      "family": "v",
+      "effect": "none",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "id": "v1",
+      "label": "Vert 1",
+      "symbol": "1",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "v2",
+      "label": "Vert 2",
+      "symbol": "2",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "v3",
+      "label": "Vert 3",
+      "symbol": "3",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "v4",
+      "label": "Vert 4",
+      "symbol": "4",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "v5",
+      "label": "Vert 5",
+      "symbol": "5",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "v6",
+      "label": "Vert 6",
+      "symbol": "6",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "v7",
+      "label": "Vert 7",
+      "symbol": "7",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 7
+    },
+    {
+      "id": "v8",
+      "label": "Vert 8",
+      "symbol": "8",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 8
+    },
+    {
+      "id": "v9",
+      "label": "Vert 9",
+      "symbol": "9",
+      "family": "v",
+      "effect": "none",
+      "count": 2,
+      "points": 9
+    },
+    {
+      "id": "vsk",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "v",
+      "effect": "skip",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "vrv",
+      "label": "Inversion",
+      "symbol": "⇄",
+      "family": "v",
+      "effect": "reverse",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "vp2",
+      "label": "Vert +2",
+      "symbol": "+2",
+      "family": "v",
+      "effect": "draw2",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "b0",
+      "label": "Bleu 0",
+      "symbol": "0",
+      "family": "b",
+      "effect": "none",
+      "count": 1,
+      "points": 0
+    },
+    {
+      "id": "b1",
+      "label": "Bleu 1",
+      "symbol": "1",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "b2",
+      "label": "Bleu 2",
+      "symbol": "2",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "b3",
+      "label": "Bleu 3",
+      "symbol": "3",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "b4",
+      "label": "Bleu 4",
+      "symbol": "4",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "b5",
+      "label": "Bleu 5",
+      "symbol": "5",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "b6",
+      "label": "Bleu 6",
+      "symbol": "6",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "b7",
+      "label": "Bleu 7",
+      "symbol": "7",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 7
+    },
+    {
+      "id": "b8",
+      "label": "Bleu 8",
+      "symbol": "8",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 8
+    },
+    {
+      "id": "b9",
+      "label": "Bleu 9",
+      "symbol": "9",
+      "family": "b",
+      "effect": "none",
+      "count": 2,
+      "points": 9
+    },
+    {
+      "id": "bsk",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "b",
+      "effect": "skip",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "brv",
+      "label": "Inversion",
+      "symbol": "⇄",
+      "family": "b",
+      "effect": "reverse",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "bp2",
+      "label": "Bleu +2",
+      "symbol": "+2",
+      "family": "b",
+      "effect": "draw2",
+      "count": 2,
+      "points": 20
+    },
+    {
+      "id": "wk",
+      "label": "Joker",
+      "symbol": "★",
+      "family": "wild",
+      "effect": "wild",
+      "count": 4,
+      "points": 50
+    },
+    {
+      "id": "wd4",
+      "label": "Joker +4",
+      "symbol": "+4",
+      "family": "wild",
+      "effect": "draw4",
+      "count": 4,
+      "points": 50
+    }
+  ],
+  "rules": {
+    "minPlayers": 2,
+    "maxPlayers": 6,
+    "handSize": 7,
+    "matchOn": "either",
+    "targetScore": 500,
+    "turnSeconds": 20
+  },
+  "notice": {
+    "goal": "Vider votre main le premier, en posant vos cartes sur la défausse.",
+    "steps": [
+      "Chacun reçoit 7 cartes, la carte du dessus donne la couleur à suivre.",
+      "Posez une carte de même couleur ou de même symbole que la carte du dessus.",
+      "Sans carte jouable, piochez une carte, puis passez si vous ne pouvez pas la poser.",
+      "Un joker se pose toujours et impose la couleur suivante.",
+      "Quand vous n’avez plus de cartes, vous marquez les points des cartes restées en main."
+    ],
+    "tips": [
+      "Gardez vos jokers pour les moments décisifs.",
+      "Un passe ou un +2 fait perdre son tour au joueur suivant."
+    ]
+  }
+}

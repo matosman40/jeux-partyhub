@@ -1,0 +1,357 @@
+{
+  "name": "Blanc-manger coco",
+  "description": "Une version gourmande et tropicale, à cinq joueurs maximum.",
+  "icon": "🥥",
+  "theme": "coco",
+  "families": [
+    {
+      "id": "coco",
+      "label": "Coco",
+      "color": "#8b5e3c"
+    },
+    {
+      "id": "mangue",
+      "label": "Mangue",
+      "color": "#ff9f1c"
+    },
+    {
+      "id": "ananas",
+      "label": "Ananas",
+      "color": "#f4c430"
+    },
+    {
+      "id": "goyave",
+      "label": "Goyave",
+      "color": "#ff6f8e"
+    }
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "label": "Coco 1",
+      "symbol": "1",
+      "family": "coco",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "c2",
+      "label": "Coco 2",
+      "symbol": "2",
+      "family": "coco",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "c3",
+      "label": "Coco 3",
+      "symbol": "3",
+      "family": "coco",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "c4",
+      "label": "Coco 4",
+      "symbol": "4",
+      "family": "coco",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "c5",
+      "label": "Coco 5",
+      "symbol": "5",
+      "family": "coco",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "c6",
+      "label": "Coco 6",
+      "symbol": "6",
+      "family": "coco",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "cpa",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "coco",
+      "effect": "skip",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "cgo",
+      "label": "Gourmand",
+      "symbol": "+2",
+      "family": "coco",
+      "effect": "draw2",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "m1",
+      "label": "Mangue 1",
+      "symbol": "1",
+      "family": "mangue",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "m2",
+      "label": "Mangue 2",
+      "symbol": "2",
+      "family": "mangue",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "m3",
+      "label": "Mangue 3",
+      "symbol": "3",
+      "family": "mangue",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "m4",
+      "label": "Mangue 4",
+      "symbol": "4",
+      "family": "mangue",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "m5",
+      "label": "Mangue 5",
+      "symbol": "5",
+      "family": "mangue",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "m6",
+      "label": "Mangue 6",
+      "symbol": "6",
+      "family": "mangue",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "mpa",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "mangue",
+      "effect": "skip",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "mgo",
+      "label": "Gourmand",
+      "symbol": "+2",
+      "family": "mangue",
+      "effect": "draw2",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "a1",
+      "label": "Ananas 1",
+      "symbol": "1",
+      "family": "ananas",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "a2",
+      "label": "Ananas 2",
+      "symbol": "2",
+      "family": "ananas",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "a3",
+      "label": "Ananas 3",
+      "symbol": "3",
+      "family": "ananas",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "a4",
+      "label": "Ananas 4",
+      "symbol": "4",
+      "family": "ananas",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "a5",
+      "label": "Ananas 5",
+      "symbol": "5",
+      "family": "ananas",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "a6",
+      "label": "Ananas 6",
+      "symbol": "6",
+      "family": "ananas",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "apa",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "ananas",
+      "effect": "skip",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "ago",
+      "label": "Gourmand",
+      "symbol": "+2",
+      "family": "ananas",
+      "effect": "draw2",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "g1",
+      "label": "Goyave 1",
+      "symbol": "1",
+      "family": "goyave",
+      "effect": "none",
+      "count": 2,
+      "points": 1
+    },
+    {
+      "id": "g2",
+      "label": "Goyave 2",
+      "symbol": "2",
+      "family": "goyave",
+      "effect": "none",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "id": "g3",
+      "label": "Goyave 3",
+      "symbol": "3",
+      "family": "goyave",
+      "effect": "none",
+      "count": 2,
+      "points": 3
+    },
+    {
+      "id": "g4",
+      "label": "Goyave 4",
+      "symbol": "4",
+      "family": "goyave",
+      "effect": "none",
+      "count": 2,
+      "points": 4
+    },
+    {
+      "id": "g5",
+      "label": "Goyave 5",
+      "symbol": "5",
+      "family": "goyave",
+      "effect": "none",
+      "count": 2,
+      "points": 5
+    },
+    {
+      "id": "g6",
+      "label": "Goyave 6",
+      "symbol": "6",
+      "family": "goyave",
+      "effect": "none",
+      "count": 2,
+      "points": 6
+    },
+    {
+      "id": "gpa",
+      "label": "Passe",
+      "symbol": "⊘",
+      "family": "goyave",
+      "effect": "skip",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "ggo",
+      "label": "Gourmand",
+      "symbol": "+2",
+      "family": "goyave",
+      "effect": "draw2",
+      "count": 2,
+      "points": 10
+    },
+    {
+      "id": "wcp",
+      "label": "Caprice",
+      "symbol": "✦",
+      "family": "wild",
+      "effect": "wild",
+      "count": 4,
+      "points": 30
+    },
+    {
+      "id": "wfe",
+      "label": "Festin",
+      "symbol": "+4",
+      "family": "wild",
+      "effect": "draw4",
+      "count": 4,
+      "points": 30
+    }
+  ],
+  "rules": {
+    "minPlayers": 2,
+    "maxPlayers": 5,
+    "handSize": 5,
+    "matchOn": "either",
+    "targetScore": 300,
+    "turnSeconds": 25
+  },
+  "notice": {
+    "goal": "Être le premier à vider sa corbeille de gourmandises.",
+    "steps": [
+      "Chacun reçoit 5 cartes : une corbeille de fruits et de desserts.",
+      "Posez une carte de même fruit ou de même chiffre que la carte du dessus.",
+      "Sans carte jouable, piochez puis passez.",
+      "Un Caprice ou un Festin se pose toujours et fait choisir le fruit suivant."
+    ],
+    "tips": [
+      "Ceci est une variante thématique : elle ne reproduit pas la version traditionnelle.",
+      "Ajustez les règles et les cartes dans l’éditeur de l’administration si besoin."
+    ]
+  }
+}

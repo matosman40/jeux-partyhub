@@ -1,0 +1,27 @@
+{
+  "format": "phgame",
+  "formatVersion": 1,
+  "id": "cartes-couleurs",
+  "name": "Couleurs & chiffres",
+  "version": "1.0.0",
+  "description": "Le classique : suivez la couleur ou le chiffre, et videz votre main le premier. Version de paquet du jeu intégré à PartyHub.",
+  "author": "matosman40",
+  "kind": "declarative",
+  "engine": {
+    "minVersion": "0.11.0",
+    "api": 1
+  },
+  "requires": {
+    "modules": [
+      "cards"
+    ]
+  },
+  "entry": "game/definition.json",
+  "licenses": [
+    {
+      "path": "licenses/LICENCE.txt",
+      "covers": []
+    }
+  ],
+  "files": []
+}

@@ -36,7 +36,7 @@ jobs:
 
       - name: Préparer PartyHub
         run: |
-          git clone --depth 1 --branch "${{ vars.PARTYHUB_REF || 'version-0.7.0' }}" https://github.com/matosman40/Partyhub.git "$RUNNER_TEMP/partyhub"
+          git clone --depth 1 --branch "${{ vars.PARTYHUB_REF || 'v0.11.0' }}" https://github.com/matosman40/Partyhub.git "$RUNNER_TEMP/partyhub"
           cd "$RUNNER_TEMP/partyhub"
           npm ci --ignore-scripts
           npm run build -w @partyhub/shared
