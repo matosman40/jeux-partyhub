@@ -98,7 +98,7 @@ Le dossier `poker` de ce dépôt est un autre jeu : un parcours au dé, sans lie
 
 Deux jeux de cartes intégrés ont aussi un paquet ici, `cartes-couleurs` (Couleurs & chiffres) et `cartes-coco` (Blanc-manger coco). Ce sont des doublons des jeux intégrés, utiles comme modèles à copier.
 
-Une fiche par jeu intégré, avec le but, le déroulement, les conseils, le nombre de joueurs et le journal de versions, est dans [`jeux-integres/`](jeux-integres/README.md). Ce sont des fiches de texte : le code reste dans PartyHub.
+Une fiche par jeu intégré, avec le but, le déroulement, les conseils, le nombre de joueurs et le journal de versions, est dans [`jeux-integres/`](jeux-integres/README.md). Ce sont des fiches de texte : le code reste dans PartyHub. Quand le format de code existera, chacun de ces jeux aura son dossier dans `jeux/`, avec son code, et sera installable seul.
 
 L'inventaire complet des jeux de PartyHub, avec ce qui peut ou non devenir un paquet, est dans `recherche/inventaire-jeux.md`.
 
