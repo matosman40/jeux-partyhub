@@ -1,6 +1,6 @@
 {
   "format": "phgame",
-  "formatVersion": 1,
+  "formatVersion": 4,
   "id": "cartes-coco",
   "name": "Blanc-manger coco",
   "version": "1.0.0",
@@ -8,7 +8,7 @@
   "author": "matosman40",
   "kind": "declarative",
   "engine": {
-    "minVersion": "0.11.0",
+    "minVersion": "0.13.0",
     "api": 1
   },
   "requires": {
@@ -21,7 +21,34 @@
     {
       "path": "licenses/LICENCE.txt",
       "covers": []
+    },
+    {
+      "path": "licenses/SONS.txt",
+      "covers": [
+        "assets/sons/musique-partie.ogg",
+        "assets/sons/sfx-card.ogg",
+        "assets/sons/sfx-chip.ogg",
+        "assets/sons/sfx-click.ogg",
+        "assets/sons/sfx-crate.ogg",
+        "assets/sons/sfx-die.ogg",
+        "assets/sons/sfx-draw.ogg",
+        "assets/sons/sfx-explode.ogg",
+        "assets/sons/sfx-final.ogg",
+        "assets/sons/sfx-hit.ogg",
+        "assets/sons/sfx-pickup.ogg",
+        "assets/sons/sfx-place.ogg",
+        "assets/sons/sfx-start.ogg",
+        "assets/sons/sfx-turn.ogg",
+        "assets/sons/sfx-win.ogg"
+      ]
+    },
+    {
+      "path": "licenses/VIGNETTE.txt",
+      "covers": [
+        "assets/cover.png"
+      ]
     }
   ],
-  "files": []
+  "files": [],
+  "cover": "assets/cover.png"
 }

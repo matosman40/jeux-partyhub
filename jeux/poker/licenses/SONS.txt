@@ -1,0 +1,9 @@
+Sons du jeu (dossier assets/sons/), et leur origine.
+
+- sfx-click, sfx-place, sfx-hit, sfx-pickup, sfx-turn, sfx-draw : Kenney Interface Sounds, licence CC0 1.0
+  (https://creativecommons.org/publicdomain/zero/1.0/). Source : https://github.com/Calinou/kenney-interface-sounds
+  Attribution non obligatoire ; Kenney.nl est crédité.
+- sfx-explode, sfx-crate, sfx-die, sfx-win, sfx-start, sfx-final, sfx-card, sfx-chip, musique-partie : synthétisés pour
+  PartyHub par sons/outils/synthese.py (dépôt jeux-partyhub), sans fichier source externe. sfx-card et sfx-chip sont
+  provisoires : ils seront remplacés par des sons du pack casino (CC0).
+- Droits des sons synthétisés : ceux du jeu, voir LICENCE.txt.

@@ -8,7 +8,9 @@ PartyHub peut importer et mettre à jour.
 ```
 jeux/
 ├── _modele/          modèle de départ, jamais publié (le nom commence par « _ »)
-└── <jeu>/            un jeu : manifest.json, game/definition.json, licenses/
+└── <jeu>/            un jeu : manifest.json, game/definition.json, assets/, licenses/
+sons/                 bruitages et musiques, copiés dans les paquets (assets/sons/), voir sons/README.md
+vignettes/            vignettes des jeux (réglages et prompts), voir vignettes/README.md
 ```
 
 ## Ajouter un jeu
@@ -49,4 +51,5 @@ L'inventaire complet des jeux de PartyHub, avec ce qui peut ou non devenir un pa
 ## Réglages
 
 - `PARTYHUB_REF` (variable du dépôt) : branche ou tag de PartyHub utilisé pour contrôler les paquets. Par défaut
-  `v0.11.0`, le dernier tag publié. Une valeur qui n'existe pas fait échouer toutes les publications.
+  `v0.11.0`. Les paquets de format 4 (sons) demandent PartyHub 0.13.0 : réglez la variable sur ce tag une fois publié,
+  sinon ces paquets sont refusés. Une valeur qui n'existe pas fait échouer toutes les publications.

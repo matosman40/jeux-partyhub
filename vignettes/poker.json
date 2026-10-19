@@ -1,0 +1,10 @@
+{
+  "titre": "Poker",
+  "sous_titre": "Un parcours au dé façon table de poker.",
+  "couleurs": [
+    "#7a1f2b",
+    "#2b0b10"
+  ],
+  "accent": "#f4d35e",
+  "motif": "table"
+}

@@ -2,7 +2,13 @@
 
 Bruitages et musiques de fond partagés par les jeux.
 
-**Ces fichiers ne font pas encore partie des paquets.** Le format de paquet n'admet que les dossiers `game`, `assets`, `data` et `licenses`, et le workflow `publier.yml` ne construit que `jeux/<jeu>/`. Les sons restent dans ce dossier, prêts à être intégrés quand le format saura les lire.
+Ce dossier est la source. Les paquets de format 4 reçoivent une copie dans `jeux/<jeu>/assets/sons/`, avec le bloc `sons`
+de leur `game/definition.json` : `cartes-couleurs`, `cartes-coco`, `parcours-des-questions` et `poker`. Une modification ici
+doit être recopiée dans chaque paquet. Le format et les règles sont dans la documentation de PartyHub (`docs/PHGAME.md`,
+section Sons).
+
+Les sons `sfx-card` et `sfx-chip` sont provisoires : ils seront remplacés par des sons du pack casino (CC0) quand il sera
+déposé.
 
 ## Contenu
 
