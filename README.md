@@ -20,6 +20,11 @@ vignettes/            vignettes des jeux (réglages et prompts), voir vignettes/
 3. Modifiez `game/definition.json` et `licenses/LICENCE.txt`.
 4. Vérifiez localement avec `phgame pack` et `phgame check` (voir [docs/PUBLIER-UN-JEU.md](https://github.com/matosman40/Partyhub/blob/main/docs/PUBLIER-UN-JEU.md) du dépôt PartyHub).
 
+## Créer un nouveau jeu avec un assistant IA
+
+`prompts/NOUVEAU-JEU.md` contient un prompt complet pour créer un jeu (cartes, plateau, questions ou recettes), avec les
+règles du format, les prompts pour la vignette et les prompts pour les quatorze bruitages et la musique de partie.
+
 ## Publier une version
 
 Créez un tag `<jeu>-vX.Y.Z`, où `X.Y.Z` est la `version` du manifeste :
