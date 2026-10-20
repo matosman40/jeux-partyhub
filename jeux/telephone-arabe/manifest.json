@@ -1,0 +1,28 @@
+{
+  "format": "phgame",
+  "formatVersion": 5,
+  "kind": "code",
+  "id": "telephone-arabe",
+  "name": "Le téléphone arabe illustré",
+  "version": "1.0.0",
+  "description": "Une phrase absurde, dessinée puis décrite par le joueur suivant : le résultat fait rire.",
+  "author": "PartyHub",
+  "engine": {
+    "minVersion": "0.15.0",
+    "api": 1
+  },
+  "entry": {
+    "server": "code/server.js",
+    "client": "code/client.js"
+  },
+  "licenses": [
+    {
+      "path": "licenses/LICENSE.txt",
+      "covers": []
+    },
+    {
+      "path": "licenses/polices.txt",
+      "covers": []
+    }
+  ]
+}

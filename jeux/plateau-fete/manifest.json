@@ -1,0 +1,28 @@
+{
+  "format": "phgame",
+  "formatVersion": 5,
+  "kind": "code",
+  "id": "plateau-fete",
+  "name": "Plateau fête",
+  "version": "1.1.0",
+  "description": "Un plateau au dé et des étoiles à acheter : lancez, avancez, tentez vos paris, et gagnez des mini-jeux sur vos téléphones.",
+  "author": "PartyHub",
+  "engine": {
+    "minVersion": "0.15.0",
+    "api": 1
+  },
+  "entry": {
+    "server": "code/server.js",
+    "client": "code/client.js"
+  },
+  "licenses": [
+    {
+      "path": "licenses/LICENSE.txt",
+      "covers": []
+    },
+    {
+      "path": "licenses/polices.txt",
+      "covers": []
+    }
+  ]
+}
