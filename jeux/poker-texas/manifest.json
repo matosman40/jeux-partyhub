@@ -1,0 +1,28 @@
+{
+  "format": "phgame",
+  "formatVersion": 5,
+  "kind": "code",
+  "id": "poker-texas",
+  "name": "Poker Texas",
+  "version": "1.0.0",
+  "description": "Le poker Texas hold’em avec des jetons : blindes, mises, tapis et showdown.",
+  "author": "PartyHub",
+  "engine": {
+    "minVersion": "0.15.0",
+    "api": 1
+  },
+  "entry": {
+    "server": "code/server.js",
+    "client": "code/client.js"
+  },
+  "licenses": [
+    {
+      "path": "licenses/LICENSE.txt",
+      "covers": []
+    },
+    {
+      "path": "licenses/polices.txt",
+      "covers": []
+    }
+  ]
+}

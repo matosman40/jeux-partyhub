@@ -1,0 +1,28 @@
+{
+  "format": "phgame",
+  "formatVersion": 5,
+  "kind": "code",
+  "id": "mots-croises",
+  "name": "Mots croisés",
+  "version": "1.0.0",
+  "description": "Une grille de mots croisés à remplir à partir des définitions.",
+  "author": "PartyHub",
+  "engine": {
+    "minVersion": "0.15.0",
+    "api": 1
+  },
+  "entry": {
+    "server": "code/server.js",
+    "client": "code/client.js"
+  },
+  "licenses": [
+    {
+      "path": "licenses/LICENSE.txt",
+      "covers": []
+    },
+    {
+      "path": "licenses/polices.txt",
+      "covers": []
+    }
+  ]
+}
