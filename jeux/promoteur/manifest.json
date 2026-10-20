@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "promoteur",
   "name": "Le Promoteur",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Achetez des rues, construisez des immeubles et ruinez vos adversaires.",
   "author": "PartyHub",
   "engine": {

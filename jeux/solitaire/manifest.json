@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "solitaire",
   "name": "Solitaire",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Classez toutes les cartes par couleur, de l’As au Roi, en construisant les colonnes.",
   "author": "PartyHub",
   "engine": {

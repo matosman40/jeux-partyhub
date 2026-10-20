@@ -1,0 +1,28 @@
+{
+  "format": "phgame",
+  "formatVersion": 5,
+  "kind": "code",
+  "id": "tennis-party",
+  "name": "Tennis party",
+  "version": "1.1.0",
+  "description": "Défendez votre côté du court : penchez le téléphone pour renvoyer la balle, en match ou en championnat.",
+  "author": "PartyHub",
+  "engine": {
+    "minVersion": "0.15.0",
+    "api": 1
+  },
+  "entry": {
+    "server": "code/server.js",
+    "client": "code/client.js"
+  },
+  "licenses": [
+    {
+      "path": "licenses/LICENSE.txt",
+      "covers": []
+    },
+    {
+      "path": "licenses/polices.txt",
+      "covers": []
+    }
+  ]
+}

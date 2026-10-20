@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "poker-texas",
   "name": "Poker Texas",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Le poker Texas hold’em avec des jetons : blindes, mises, tapis et showdown.",
   "author": "PartyHub",
   "engine": {

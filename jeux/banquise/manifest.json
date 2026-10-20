@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "banquise",
   "name": "Banquise",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Restez sur la glace : trois niveaux, des trous et du vent. Le dernier debout gagne.",
   "author": "PartyHub",
   "engine": {

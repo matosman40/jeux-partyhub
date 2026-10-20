@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "bombes-party",
   "name": "Bombes party",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Posez vos bombes, détruisez les caisses et soyez le dernier debout !",
   "author": "PartyHub",
   "engine": {

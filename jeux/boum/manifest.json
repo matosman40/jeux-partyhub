@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "boum",
   "name": "BOUM !",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Des manches tirées au hasard : écrivez, votez, bluffez. Chaque manche change de mode.",
   "author": "PartyHub",
   "engine": {

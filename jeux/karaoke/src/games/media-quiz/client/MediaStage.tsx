@@ -1,0 +1,330 @@
+import { useEffect, useRef, useState } from 'react';
+import type { MediaKind } from '@partyhub/shared';
+import { useMediaUrl } from '../../client/media-relay.js';
+
+/**
+ * Lecteur de l’écran principal. Il ne sert qu’à l’hôte : les téléphones ne reçoivent
+ * jamais l’adresse du média. Trois sources : fichier audio, fichier vidéo de la
+ * médiathèque, ou vidéo YouTube (API officielle du lecteur, chargée à la demande).
+ */
+
+export interface HostMedia {
+  key: number;
+  source: { type: 'youtube'; videoId: string } | { type: 'asset'; assetId: string; mediaKind: 'audio' | 'video' };
+  startSec: number;
+  durationSec: number;
+}
+
+interface MediaStageProps {
+  media: HostMedia | null;
+  /** Vrai pendant la phase de réponse : l’extrait joue. Faux à la révélation : il s’arrête. */
+  active: boolean;
+  kind: MediaKind;
+  /** Vrai : la vidéo YouTube joue sans son (le son vient d’ailleurs, par exemple un enregistrement). */
+  muted?: boolean;
+  /** Force l’affichage de l’image (sinon, il dépend du type de média). */
+  picture?: boolean;
+}
+
+/* ---------- API YouTube (une seule fois par page) ---------- */
+
+export interface YouTubePlayer {
+  seekTo(seconds: number, allowSeekAhead: boolean): void;
+  playVideo(): void;
+  pauseVideo(): void;
+  mute(): void;
+  unMute(): void;
+  destroy(): void;
+  getPlayerState(): number;
+}
+
+export interface YouTubeNamespace {
+  Player: new (
+    element: HTMLElement,
+    options: {
+      videoId: string;
+      width?: string | number;
+      height?: string | number;
+      playerVars?: Record<string, string | number>;
+      events?: { onReady?: () => void; onError?: () => void; onStateChange?: (e: { data: number }) => void };
+    },
+  ) => YouTubePlayer;
+}
+
+declare global {
+  interface Window {
+    YT?: YouTubeNamespace;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+let youtubeApi: Promise<YouTubeNamespace> | null = null;
+
+/** Charge l’API du lecteur YouTube une seule fois, à la demande. */
+export function loadYouTubeApi(): Promise<YouTubeNamespace> {
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+  if (!youtubeApi) {
+    youtubeApi = new Promise((resolve, reject) => {
+      const previous = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        previous?.();
+        if (window.YT) resolve(window.YT);
+      };
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.async = true;
+      script.onerror = () => {
+        youtubeApi = null;
+        reject(new Error('API YouTube injoignable'));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return youtubeApi;
+}
+
+/* ---------- Lecteur ---------- */
+
+const PLAYING = 1;
+const YT_UNSTARTED = -1;
+const YT_PAUSED = 2;
+const YT_CUED = 5;
+
+/**
+ * Adresse d’un cadre YouTube sans script. Sert quand le script du lecteur ne peut pas se charger (vue de jeu, où
+ * la politique n’autorise que les cadres) : l’extrait joue alors dans le cadre, sans contrôle fin.
+ */
+function embedUrl(videoId: string, startSec: number, muted: boolean): string {
+  const params = new URLSearchParams({
+    start: String(Math.max(0, Math.floor(startSec))),
+    autoplay: '1',
+    mute: muted ? '1' : '0',
+    controls: '0',
+    rel: '0',
+    modestbranding: '1',
+    playsinline: '1',
+  });
+  return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
+}
+
+export function MediaStage({ media, active, kind, muted = false, picture }: MediaStageProps) {
+  const [error, setError] = useState<string | null>(null);
+  const [needsTap, setNeedsTap] = useState(false);
+  const [replay, setReplay] = useState(0);
+  /** Le script du lecteur n’a pas pu se charger : l’extrait passe dans un cadre YouTube simple. */
+  const [embed, setEmbed] = useState(false);
+  const mediaEl = useRef<HTMLAudioElement | HTMLVideoElement | null>(null);
+  const ytHost = useRef<HTMLDivElement | null>(null);
+  const yt = useRef<YouTubePlayer | null>(null);
+  const stopTimer = useRef<number | undefined>(undefined);
+
+  const key = media ? `${media.key}:${replay}` : 'none';
+  const isYouTube = media?.source.type === 'youtube';
+
+  // Lancement de l’extrait, et arrêt à la fin de sa durée.
+  useEffect(() => {
+    setError(null);
+    setNeedsTap(false);
+    setEmbed(false);
+    if (!media) return;
+    let cancelled = false;
+
+    const scheduleStop = () => {
+      window.clearTimeout(stopTimer.current);
+      stopTimer.current = window.setTimeout(() => stopPlayback(), media.durationSec * 1000);
+    };
+
+    const stopPlayback = () => {
+      const el = mediaEl.current;
+      if (el) el.pause();
+      yt.current?.pauseVideo();
+    };
+
+    if (media.source.type === 'asset') {
+      const el = mediaEl.current;
+      if (!el) return;
+      const onReady = () => {
+        el.currentTime = media.startSec;
+        el.play().then(
+          () => scheduleStop(),
+          () => setNeedsTap(true),
+        );
+      };
+      if (el.readyState >= 1) onReady();
+      else el.addEventListener('loadedmetadata', onReady, { once: true });
+      return () => {
+        cancelled = true;
+        window.clearTimeout(stopTimer.current);
+        el.removeEventListener('loadedmetadata', onReady);
+      };
+    }
+
+    // YouTube
+    const host = ytHost.current;
+    if (!host) return;
+    const holder = document.createElement('div');
+    host.appendChild(holder);
+    loadYouTubeApi()
+      .then((YT) => {
+        if (cancelled) return;
+        yt.current = new YT.Player(holder, {
+          videoId: media.source.type === 'youtube' ? media.source.videoId : '',
+          width: '100%',
+          height: '100%',
+          playerVars: {
+            start: media.startSec,
+            controls: 0,
+            playsinline: 1,
+            rel: 0,
+            modestbranding: 1,
+            iv_load_policy: 3,
+            disablekb: 1,
+          },
+          events: {
+            onReady: () => {
+              if (muted) yt.current?.mute();
+              else yt.current?.unMute();
+              yt.current?.seekTo(media.startSec, true);
+              yt.current?.playVideo();
+              scheduleStop();
+              // Un navigateur peut refuser la lecture avec son sans geste : on propose alors le bouton de reprise.
+              window.setTimeout(() => {
+                if (cancelled || !yt.current) return;
+                const state = yt.current.getPlayerState();
+                if (state === YT_UNSTARTED || state === YT_PAUSED || state === YT_CUED) setNeedsTap(true);
+              }, 1500);
+            },
+            onStateChange: (e) => {
+              if (e.data === PLAYING) setNeedsTap(false);
+            },
+            onError: () => setError('Cette vidéo ne peut pas être lue (privée, supprimée ou non autorisée).'),
+          },
+        });
+      })
+      .catch(() => {
+        // Script bloqué ou injoignable : on lit l’extrait dans un cadre YouTube simple.
+        if (!cancelled) setEmbed(true);
+      });
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(stopTimer.current);
+      try {
+        yt.current?.destroy();
+      } catch {
+        // Le lecteur peut déjà être détruit.
+      }
+      yt.current = null;
+      holder.remove();
+    };
+    // Une nouvelle clé = un nouvel extrait (ou un rejeu demandé par l’hôte).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+
+  // Révélation : l’extrait s’arrête.
+  useEffect(() => {
+    if (active) return;
+    window.clearTimeout(stopTimer.current);
+    mediaEl.current?.pause();
+    yt.current?.pauseVideo();
+  }, [active]);
+
+  const assetSrc = useMediaUrl(media?.source.type === 'asset' ? `/api/assets/${media.source.assetId}` : null);
+
+  if (!media) {
+    return <div className="mq-stage mq-stage-empty" aria-hidden="true" />;
+  }
+
+  // Image à l’écran pour un film ou une vidéo ; visuel sonore pour une chanson ou un fichier audio.
+  const showsPicture =
+    picture ?? (media?.source.type === 'asset' ? media.source.mediaKind === 'video' : kind !== 'musique');
+  const visual = showsPicture ? 'video' : 'sound';
+
+  return (
+    <div className={`mq-stage is-${visual}`} data-kind={kind}>
+      {visual === 'video' && media.source.type === 'asset' && (
+        <video
+          key={key}
+          ref={(el) => {
+            mediaEl.current = el;
+          }}
+          className="mq-media"
+          src={assetSrc || undefined}
+          playsInline
+          preload="auto"
+          onError={() => setError('Le fichier vidéo ne peut pas être lu.')}
+        />
+      )}
+      {visual === 'sound' && media.source.type === 'asset' && (
+        <audio
+          key={key}
+          ref={(el) => {
+            mediaEl.current = el;
+          }}
+          src={assetSrc || undefined}
+          preload="auto"
+          onError={() => setError('Le fichier audio ne peut pas être lu.')}
+        />
+      )}
+      {isYouTube && (
+        <div
+          className={visual === 'video' ? 'mq-yt' : 'mq-yt is-hidden'}
+          ref={ytHost}
+          aria-hidden={visual !== 'video'}
+        />
+      )}
+      {visual === 'sound' && (
+        <div className={`mq-sound ${active ? 'is-playing' : ''}`} aria-hidden="true">
+          <span className="mq-note">?</span>
+          <span className="mq-bars">
+            {Array.from({ length: 12 }, (_, i) => (
+              <i key={i} style={{ animationDelay: `${(i % 6) * 0.11}s` }} />
+            ))}
+          </span>
+        </div>
+      )}
+      {isYouTube && embed && media.source.type === 'youtube' && (
+        <iframe
+          key={key}
+          className="mq-yt-embed"
+          title="Extrait YouTube"
+          src={embedUrl(media.source.videoId, media.startSec, muted)}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            border: 0,
+            visibility: visual === 'video' ? 'visible' : 'hidden',
+          }}
+        />
+      )}
+      {visual === 'video' && isYouTube && <div className="mq-yt-cover" aria-hidden="true" />}
+      {needsTap && (
+        <button
+          type="button"
+          className="btn primary mq-tap"
+          onClick={() => {
+            setNeedsTap(false);
+            const el = mediaEl.current;
+            if (el) void el.play();
+            yt.current?.playVideo();
+          }}
+        >
+          Lancer l’extrait
+        </button>
+      )}
+      {error && (
+        <p className="mq-error" role="alert">
+          {error}
+        </p>
+      )}
+      {active && (
+        <button type="button" className="link-btn mq-replay" onClick={() => setReplay((n) => n + 1)}>
+          Rejouer l’extrait
+        </button>
+      )}
+    </div>
+  );
+}

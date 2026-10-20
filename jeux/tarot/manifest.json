@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "tarot",
   "name": "Tarot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Le tarot à quatre : enchères, chien, écart et plis, un preneur contre trois défenseurs.",
   "author": "PartyHub",
   "engine": {

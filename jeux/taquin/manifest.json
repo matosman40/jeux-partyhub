@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "taquin",
   "name": "Taquin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Remettez les tuiles dans l’ordre en les faisant glisser vers la case vide.",
   "author": "PartyHub",
   "engine": {

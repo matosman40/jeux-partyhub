@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "mots-croises",
   "name": "Mots croisés",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Une grille de mots croisés à remplir à partir des définitions.",
   "author": "PartyHub",
   "engine": {

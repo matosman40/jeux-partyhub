@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "loups-village",
   "name": "Les Loups du village",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Les loups dévorent le village la nuit. Le jour, démasquez-les avant qu’il ne soit trop tard.",
   "author": "PartyHub",
   "engine": {
