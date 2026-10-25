@@ -534,7 +534,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
     description:
       'Un plateau au dé et des étoiles à acheter : lancez, avancez, tentez vos paris, et gagnez des mini-jeux sur vos téléphones.',
     icon: '🎡',
-    version: '1.1.0',
+    version: '1.1.1',
     apiVersion: 1,
     minPlayers: 2,
     maxPlayers: 8,

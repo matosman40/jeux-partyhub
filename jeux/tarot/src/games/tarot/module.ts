@@ -402,7 +402,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
     name: 'Tarot',
     description: 'Le tarot à quatre : enchères, chien, écart et plis, un preneur contre trois défenseurs.',
     icon: '🎴',
-    version: '1.0.1',
+    version: '1.0.2',
     apiVersion: 1,
     minPlayers: PLAYERS,
     maxPlayers: PLAYERS,
