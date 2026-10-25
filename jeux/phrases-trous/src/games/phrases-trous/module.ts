@@ -109,12 +109,14 @@ function afterTopicTurn(s: PhrasesState, topics: KeywordTurns, ctx: GameContext)
 /** Sans aucun mot-clé, les phrases intégrées sont tirées tout de suite. Sinon, l’IA écrit les phrases. */
 function closeTopics(s: PhrasesState, ctx: GameContext): PhrasesState {
   ctx.cancel(TOPIC_TIMEOUT);
+  // Paquet de code : le moteur n'exécute pas de travail d'IA (pas de `pendingJob` relayé). Les phrases intégrées
+  // sont donc tirées tout de suite, même quand des mots-clés ont été proposés.
   const themes = s.topics ? keywordThemes(s.topics, s.players) : [];
   if (themes.length === 0) {
     const content = curatedContent(s.settings.rounds, ctx.random);
     return startGame({ ...s, notice: 'Aucun mot-clé proposé : phrases intégrées.' }, content, ctx);
   }
-  return { ...s, phase: 'generating', jobId: `phrases-${ctx.now()}`, notice: null };
+  return startGame({ ...s, notice: 'IA non disponible dans ce paquet : phrases intégrées.' }, curatedContent(s.settings.rounds, ctx.random), ctx);
 }
 
 /* ---------------------------------------------------------------- tours */

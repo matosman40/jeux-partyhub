@@ -1,3 +1,6 @@
+/** Copie profonde d’un état de partie (données seulement) : `structuredClone` n’existe pas dans le bac à sable. */
+const deepCopy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+
 import { z } from 'zod';
 import type {
   BotSuggestion,
@@ -146,7 +149,7 @@ function the(card: { entry: string }): string {
 
 function takeSnapshot(s: RamiState): TurnSnapshot {
   const id = currentId(s);
-  return structuredClone({
+  return deepCopy({
     hand: s.hands[id] ?? [],
     melds: s.melds,
     draw: s.draw,
@@ -161,7 +164,7 @@ function takeSnapshot(s: RamiState): TurnSnapshot {
 
 function restoreSnapshot(s: RamiState, snap: TurnSnapshot): void {
   const id = currentId(s);
-  const copy = structuredClone(snap);
+  const copy = deepCopy(snap);
   s.hands[id] = copy.hand;
   s.melds = copy.melds;
   s.draw = copy.draw;
@@ -251,7 +254,7 @@ function endRound(s: RamiState, ctx: GameContext, winner: string | null): void {
     penalties[id] = ramiSec ? base * 2 : base;
     s.scores[id] = (s.scores[id] ?? 0) + penalties[id]!;
   }
-  s.result = { winner, ramiSec, hands: structuredClone(s.hands), penalties };
+  s.result = { winner, ramiSec, hands: deepCopy(s.hands), penalties };
   s.roundWinner = winner;
   s.ramiSec = ramiSec;
   s.startSnap = null;
@@ -577,7 +580,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
   }
 
   function onPlayerJoin(state: RamiState, player: PlayerRef): RamiState {
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.names[player.id] = player.name;
     if (!s.started && !s.order.includes(player.id) && s.order.length < manifest.maxPlayers) {
       s.order.push(player.id);
@@ -588,7 +591,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
 
   function onPlayerLeave(state: RamiState, player: PlayerRef): RamiState {
     if (state.started) return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.order = s.order.filter((id) => id !== player.id);
     delete s.scores[player.id];
     return s;
@@ -597,7 +600,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
   function start(state: RamiState, ctx: GameContext): GameResult<RamiState> {
     if (state.started) return fail('La partie est déjà lancée.');
     if (state.order.length < manifest.minPlayers) return fail(`Il faut au moins ${manifest.minPlayers} joueurs.`);
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.started = true;
     s.round = 0;
     dealRound(s, ctx);
@@ -617,7 +620,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
     if (state.phase !== 'play') return fail('La manche est terminée.');
     if (currentId(state) !== pid) return fail('Ce n’est pas votre tour.');
     if (!Object.hasOwn(actionSchemas, type)) return fail('Action inconnue.');
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     const error = apply(s, pid, type, payload, ctx);
     if (error) return fail(error);
     s.seq += 1;
@@ -626,7 +629,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
 
   function nextRound(state: RamiState, ctx: GameContext): RamiState {
     if (state.phase !== 'round-over') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     ctx.cancel(NEXT_ROUND);
     dealRound(s, ctx);
     s.seq += 1;
@@ -636,7 +639,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
   function onTimer(state: RamiState, key: string, ctx: GameContext): RamiState {
     if (key === NEXT_ROUND) return nextRound(state, ctx);
     if (key !== TURN || !state.started || state.phase !== 'play') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     timeout(s, ctx);
     s.seq += 1;
     return s;
@@ -655,7 +658,7 @@ export function createRamiGame(): GameModule<RamiState, RamiSettings> {
 
   function end(state: RamiState, ctx: GameContext): RamiState {
     if (state.phase === 'final') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     ctx.cancel(TURN);
     ctx.cancel(NEXT_ROUND);
     s.turnEndsAt = null;

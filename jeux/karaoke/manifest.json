@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "karaoke",
   "name": "Karaoké",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cherchez une chanson sur YouTube et chantez un passage : l’écran le joue, votre voix est rejouée, et les autres notent.",
   "author": "PartyHub",
   "engine": {

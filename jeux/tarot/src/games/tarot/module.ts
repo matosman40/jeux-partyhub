@@ -1,3 +1,6 @@
+/** Copie profonde d’un état de partie (données seulement) : `structuredClone` n’existe pas dans le bac à sable. */
+const deepCopy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+
 import { z } from 'zod';
 import type { BotSuggestion, GameContext, GameManifest, GameModule, GameResult, PlayerRef } from '@partyhub/shared';
 import { directory, fail, ok, rankEntries, shuffle } from '../common/engine.js';
@@ -383,7 +386,7 @@ function lowestLegal(s: TarotState, id: string): string {
 /** Action automatique du joueur dont c’est le tour : passe, écart des plus faibles cartes ou plus petite carte permise. */
 function autoMove(state: TarotState, ctx: GameContext, prefix: string): TarotState {
   if (!state.started || !state.turn) return state;
-  const s = structuredClone(state);
+  const s = deepCopy(state);
   const id = s.turn!;
   if (s.phase === 'bidding') applyBid(s, id, null, ctx, prefix);
   else if (s.phase === 'ecart') applyEcart(s, id, autoEcart(s.hands[id]!), ctx, prefix);
@@ -443,7 +446,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
   }
 
   function onPlayerJoin(state: TarotState, player: PlayerRef): TarotState {
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.names[player.id] = player.name;
     if (!s.started && !s.order.includes(player.id) && s.order.length < PLAYERS) {
       s.order.push(player.id);
@@ -454,7 +457,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
 
   function onPlayerLeave(state: TarotState, player: PlayerRef): TarotState {
     if (state.started) return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.order = s.order.filter((id) => id !== player.id);
     delete s.scores[player.id];
     return s;
@@ -463,7 +466,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
   function start(state: TarotState, ctx: GameContext): GameResult<TarotState> {
     if (state.started) return fail('La partie est déjà lancée.');
     if (state.order.length !== PLAYERS) return fail('Le tarot se joue à exactement 4 joueurs.');
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.started = true;
     s.round = 1;
     startDeal(s, ctx, s.order[0]!);
@@ -481,7 +484,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
     if (!state.started || !state.order.includes(pid)) return fail('Vous ne participez pas à cette partie.');
     if (state.phase === 'round-over' || state.phase === 'final') return fail('La donne est terminée.');
     if (state.turn !== pid) return fail('Ce n’est pas votre tour.');
-    const s = structuredClone(state);
+    const s = deepCopy(state);
 
     if (type === 'bid' || type === 'pass') {
       if (s.phase !== 'bidding') return fail('Les enchères sont terminées.');
@@ -525,7 +528,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
 
   function startNextRound(state: TarotState, ctx: GameContext): TarotState {
     if (state.phase !== 'round-over') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.round += 1;
     startDeal(s, ctx, nextPlayer(s, s.dealer!));
     return s;
@@ -549,7 +552,7 @@ export function createTarotGame(): GameModule<TarotState, TarotSettings> {
 
   function end(state: TarotState, ctx: GameContext): TarotState {
     if (state.phase === 'final') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     ctx.cancel(TURN);
     ctx.cancel(NEXT_ROUND);
     s.turn = null;
