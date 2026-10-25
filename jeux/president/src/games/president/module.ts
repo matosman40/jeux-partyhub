@@ -1,3 +1,6 @@
+/** Copie profonde d’un état de partie (données seulement) : `structuredClone` n’existe pas dans le bac à sable. */
+const deepCopy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
+
 import { z } from 'zod';
 import type { CardEntry, GameContext, GameManifest, GameModule, GameResult, PlayerRef } from '@partyhub/shared';
 import { directory, fail, ok, rankEntries, shuffle } from '../common/engine.js';
@@ -295,7 +298,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
   }
 
   function onPlayerJoin(state: PresidentState, player: PlayerRef): PresidentState {
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.names[player.id] = player.name;
     if (!s.started && !s.order.includes(player.id) && s.order.length < manifest.maxPlayers) {
       s.order.push(player.id);
@@ -306,7 +309,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
 
   function onPlayerLeave(state: PresidentState, player: PlayerRef): PresidentState {
     if (state.started) return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.order = s.order.filter((id) => id !== player.id);
     delete s.scores[player.id];
     return s;
@@ -317,7 +320,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
     if (state.order.length < manifest.minPlayers) {
       return fail(`Il faut au moins ${manifest.minPlayers} joueurs.`);
     }
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     s.started = true;
     s.round = 0;
     return ok(dealRound(s, ctx, null));
@@ -330,7 +333,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
     payload: unknown,
     ctx: GameContext,
   ): GameResult<PresidentState> {
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     const pid = player.id;
     if (!s.started || !s.hands[pid]) return fail('Vous ne participez pas à cette manche.');
     if (s.phase !== 'play') return fail('La manche est terminée.');
@@ -399,7 +402,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
 
   function startNextRound(state: PresidentState, ctx: GameContext): PresidentState {
     if (state.phase !== 'round-over') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     ctx.cancel(NEXT_ROUND);
     const previous = [...s.finished];
     const dealt = dealRound(s, ctx, previous[0]!);
@@ -411,7 +414,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
   function onTimer(state: PresidentState, key: string, ctx: GameContext): PresidentState {
     if (key === NEXT_ROUND) return startNextRound(state, ctx);
     if (key !== TURN || !state.started || state.phase !== 'play') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     const id = currentId(s);
     if (s.pileCount > 0) {
       s.passed.push(id);
@@ -453,7 +456,7 @@ export function createPresidentGame(): GameModule<PresidentState, PresidentSetti
 
   function end(state: PresidentState, ctx: GameContext): PresidentState {
     if (state.phase === 'final') return state;
-    const s = structuredClone(state);
+    const s = deepCopy(state);
     ctx.cancel(TURN);
     ctx.cancel(NEXT_ROUND);
     s.turnEndsAt = null;

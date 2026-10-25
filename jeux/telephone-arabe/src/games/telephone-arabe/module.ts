@@ -171,7 +171,7 @@ export const telephoneArabe: GameModule<TelephoneState, TelephoneSettings> = {
     name: 'Le téléphone arabe illustré',
     description: 'Une phrase absurde, dessinée puis décrite par le joueur suivant : le résultat fait rire.',
     icon: '🎨',
-    version: '1.0.0',
+    version: '1.0.1',
     apiVersion: 1,
     minPlayers: 2,
     maxPlayers: 10,

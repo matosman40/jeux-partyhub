@@ -589,7 +589,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
 
   onPlayerJoin(state, player) {
     if (state.phase !== 'ready') return state;
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     s.names[player.id] = player.name;
     if (!s.order.includes(player.id)) s.order.push(player.id);
     s.dist[player.id] = 0;
@@ -600,7 +600,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
 
   onPlayerLeave(state, player) {
     if (state.phase !== 'ready') return state;
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     s.order = s.order.filter((id) => id !== player.id);
     delete s.names[player.id];
     delete s.dist[player.id];
@@ -612,7 +612,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
   start(state, ctx): GameResult<PlateauState> {
     if (state.phase !== 'ready') return fail('La partie a déjà commencé');
     if (state.order.length < 2) return fail('Il faut au moins 2 joueurs');
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     const spots = [...STAR_SPOTS];
     s.starCells = [];
     for (let i = 0; i < STAR_COUNT && spots.length > 0; i++) {
@@ -627,7 +627,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
     if (type === 'roll') {
       if (state.phase !== 'roll') return fail('Ce n’est pas le moment de lancer le dé');
       if (player.id in state.rolls) return fail('Vous avez déjà lancé le dé');
-      const s = structuredClone(state);
+      const s = JSON.parse(JSON.stringify(state));
       s.rolls[player.id] = rollDie(() => ctx.random());
       if (everyConnectedDone(ctx, s.order, (id) => id in s.rolls)) {
         // Le lancer a commencé à `nextAt - rollMax` : on attend encore s’il n’a pas duré `rollMin`.
@@ -647,7 +647,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
       if (state.phase !== 'choice' || !pending) return fail('Aucun choix à faire pour le moment');
       const { choice } = payload as { choice: string };
       if (!isChoiceFor(pending.kind, choice)) return fail('Ce choix n’est pas proposé');
-      const s = structuredClone(state);
+      const s = JSON.parse(JSON.stringify(state));
       decide(s, player.id, choice, ctx);
       delete s.pending[player.id];
       if (Object.keys(s.pending).length === 0) return ok(beginResolve(s, ctx));
@@ -658,7 +658,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
       if (player.id in state.mg.submissions) return fail('Vous avez déjà joué ce défi');
       const game = currentGame(state);
       if (!game) return fail('Rien à jouer pour le moment');
-      const s = structuredClone(state);
+      const s = JSON.parse(JSON.stringify(state));
       const mg = s.mg!;
       const { value } = payload as { value: number };
       const elapsed = Math.max(0, ctx.now() - mg.startedAt);
@@ -672,11 +672,11 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
 
   onTimer(state, key, ctx) {
     if (key !== TIMER) return state;
-    return step(structuredClone(state), ctx);
+    return step(JSON.parse(JSON.stringify(state)), ctx);
   },
 
   nextRound(state, ctx) {
-    return step(structuredClone(state), ctx);
+    return step(JSON.parse(JSON.stringify(state)), ctx);
   },
 
   calculateScores(s): ScoreEntry[] {
@@ -690,7 +690,7 @@ export const plateauFete: GameModule<PlateauState, PlateauSettings> = {
   },
 
   end(state, ctx) {
-    return finish(structuredClone(state), ctx);
+    return finish(JSON.parse(JSON.stringify(state)), ctx);
   },
 
   getPublicState(s) {

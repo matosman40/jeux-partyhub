@@ -62,6 +62,8 @@ export function DrawPad({ disabled, onSubmit }: DrawPadProps) {
     <div className="draw-pad">
       <div
         className="draw-surface"
+        // Le navigateur ne doit pas faire défiler la page pendant le tracé : sinon il annule le doigt.
+        style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none', WebkitTouchCallout: 'none' }}
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={onUp}

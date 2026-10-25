@@ -383,7 +383,7 @@ export const karaoke: GameModule<KaraokeState, KaraokeSettings> = {
       'Cherchez une chanson sur YouTube et chantez un passage : l’écran le joue, votre voix est rejouée, et les autres notent.',
     icon: '🎤',
     category: 'quiz',
-    version: '1.0.0',
+    version: '1.0.1',
     apiVersion: 1,
     // Il faut quelqu’un pour chanter et quelqu’un pour noter.
     minPlayers: 2,

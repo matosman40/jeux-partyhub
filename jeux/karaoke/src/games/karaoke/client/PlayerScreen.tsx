@@ -2,8 +2,16 @@ import { useRef, useState } from 'react';
 import { parseTimeInput, parseYoutubeId, youtubeStartFromUrl } from '@partyhub/shared';
 import type { PlayerViewProps } from '../../client/types.js';
 import { useRemaining } from '../../client/hooks.js';
-import { canUseMedia, requestMicrophone, useMediaPrefs } from '../../client/media.js';
-import { recordClip } from '../../imite-moi/client/media-capture.js';
+
+/**
+ * Micro fourni par la page de PartyHub. La vue n'ouvre jamais le micro elle-même : elle tourne dans un cadre
+ * sandboxé, sans origine, auquel le navigateur refuse le micro. La page enregistre et renvoie la voix.
+ */
+interface MicApi {
+  micCheck?: () => Promise<{ ok: boolean; error?: string }>;
+  voice?: (ms: number) => Promise<{ ok: boolean; error?: string; data?: string }>;
+  voiceStop?: () => Promise<{ ok: boolean; error?: string }>;
+}
 
 interface Hit {
   videoId: string;
@@ -26,30 +34,17 @@ function formatTime(total: number): string {
   return `${minutes}:${String(total % 60).padStart(2, '0')}`;
 }
 
-/** Message en français pour un refus ou une absence de micro (les autres messages viennent déjà en français). */
-function micMessage(err: unknown): string {
-  if (!canUseMedia()) return 'Le micro n’est pas disponible sur cette page : ouvrez PartyHub en HTTPS.';
-  const name = err && typeof err === 'object' && 'name' in err ? String((err as { name: unknown }).name) : '';
-  if (name === 'NotAllowedError' || name === 'PermissionDeniedError') {
-    return 'Accès au micro refusé. Autorisez-le dans les réglages du navigateur, puis réessayez.';
-  }
-  if (name === 'NotFoundError' || name === 'DevicesNotFoundError') return 'Aucun micro trouvé sur cet appareil.';
-  if (err instanceof Error && name === 'Error') return err.message;
-  return 'Impossible d’utiliser le micro.';
-}
-
 /** Téléphone : chercher ou coller une vidéo et chanter le passage, puis noter les autres. */
-export function KaraokePlayer({ publicState: pub, playerState: me, send, now }: PlayerViewProps) {
+export function KaraokePlayer(props: PlayerViewProps & MicApi) {
+  const { publicState: pub, playerState: me, send, now, micCheck, voice, voiceStop } = props;
   const remaining = useRemaining(pub?.endsAt, now);
-  const [prefs] = useMediaPrefs();
   const [query, setQuery] = useState('');
   const [link, setLink] = useState('');
   const [startText, setStartText] = useState('0:00');
   const [recording, setRecording] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  /** Micro du passage en cours, et drapeau posé quand le chanteur arrête : la voix n’est alors pas envoyée. */
-  const micStream = useRef<MediaStream | null>(null);
+  /** Drapeau posé quand le chanteur arrête : la voix n’est alors pas envoyée. */
   const passageStopped = useRef(false);
   if (!pub) return null;
 
@@ -75,7 +70,7 @@ export function KaraokePlayer({ publicState: pub, playerState: me, send, now }: 
   /** Le chanteur arrête son passage : le micro se coupe tout de suite, et la voix enregistrée n’est pas envoyée. */
   function abandonSong() {
     passageStopped.current = true;
-    micStream.current?.getTracks().forEach((track) => track.stop());
+    void voiceStop?.();
     void run('abandon', {}, 'Passage refusé.');
   }
 
@@ -119,15 +114,12 @@ export function KaraokePlayer({ publicState: pub, playerState: me, send, now }: 
     }
     setError(null);
     passageStopped.current = false;
-    let stream: MediaStream;
-    try {
-      stream = await requestMicrophone(prefs);
-    } catch (err) {
-      setError(micMessage(err));
+    // Autorisation du micro d'abord : un refus arrête la demande avant que le passage ne parte sur l'écran.
+    const mic = micCheck ? await micCheck() : { ok: false, error: 'Le micro n’est pas disponible ici.' };
+    if (!mic.ok) {
+      setError(mic.error ?? 'Impossible d’utiliser le micro.');
       return;
     }
-    micStream.current = stream;
-    const stop = () => stream.getTracks().forEach((track) => track.stop());
     setBusy(true);
     const started = await send('sing', {
       videoId: chosen.videoId,
@@ -137,27 +129,25 @@ export function KaraokePlayer({ publicState: pub, playerState: me, send, now }: 
     });
     setBusy(false);
     if (!started.ok) {
-      stop();
       setError(started.error ?? 'Passage refusé.');
       return;
     }
     setRecording(true);
-    try {
-      const clip = await recordClip(stream, (pub.segmentSeconds ?? 12) * 1000);
-      stop();
-      setRecording(false);
-      // Arrêt pendant l’enregistrement : l’écran a déjà passé à la suite, la voix n’est pas envoyée.
-      if (passageStopped.current) return;
-      const sent = await send('recording', { dataUrl: clip });
-      if (!sent.ok) setError(sent.error ?? 'Enregistrement refusé.');
-    } catch (err) {
-      stop();
-      setRecording(false);
-      if (passageStopped.current) return;
+    const seconds = pub.segmentSeconds ?? 12;
+    const clip = voice
+      ? await voice(seconds * 1000)
+      : { ok: false, error: 'Le micro n’est pas disponible ici.' };
+    setRecording(false);
+    // Arrêt pendant l’enregistrement : l’écran a déjà passé à la suite, la voix n’est pas envoyée.
+    if (passageStopped.current) return;
+    if (!clip.ok || !clip.data) {
       // Le passage s’arrête tout de suite plutôt que d’attendre la fin du délai.
       await send('abandon', {});
-      setError(`${micMessage(err)} Votre passage est arrêté.`);
+      setError(`${clip.error ?? 'Enregistrement impossible.'} Votre passage est arrêté.`);
+      return;
     }
+    const sent = await send('recording', { dataUrl: clip.data });
+    if (!sent.ok) setError(sent.error ?? 'Enregistrement refusé.');
   }
 
   if (pub.phase === 'ready') {

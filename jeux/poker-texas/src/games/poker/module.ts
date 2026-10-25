@@ -494,7 +494,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
   },
 
   onPlayerJoin(state: PokerState, player: PlayerRef): PokerState {
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     s.names[player.id] = player.name;
     if (!s.started && !s.order.includes(player.id)) {
       s.order.push(player.id);
@@ -505,7 +505,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
 
   onPlayerLeave(state: PokerState, player: PlayerRef): PokerState {
     if (state.started) return state;
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     s.order = s.order.filter((id) => id !== player.id);
     delete s.chips[player.id];
     return s;
@@ -514,7 +514,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
   start(state: PokerState, ctx: GameContext): GameResult<PokerState> {
     if (state.started) return fail('La partie est déjà lancée.');
     if (state.order.length < 2) return fail('Il faut au moins 2 joueurs.');
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     s.started = true;
     startHand(s, ctx);
     return ok(s);
@@ -532,7 +532,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
     if (state.phase !== 'betting') return fail('Aucune mise en cours.');
     if (state.order[state.toAct] !== player.id) return fail('Ce n’est pas votre tour.');
     if (!['fold', 'check', 'call', 'bet', 'allin'].includes(type)) return fail('Action inconnue.');
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     const err = act(s, player.id, type, payload);
     if (err) return fail(err);
     afterAction(s, ctx, player.id);
@@ -541,7 +541,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
 
   onTimer(state: PokerState, key: string, ctx: GameContext): PokerState {
     if (!state.started || state.phase === 'final') return state;
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     if (key === NEXT_HAND && s.phase === 'hand-over') {
       ctx.cancel(NEXT_HAND);
       if (s.hand >= s.settings.hands) finish(s, ctx);
@@ -557,7 +557,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
 
   nextRound(state: PokerState, ctx: GameContext): PokerState {
     if (!state.started || state.phase !== 'hand-over') return state;
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     ctx.cancel(NEXT_HAND);
     if (s.hand >= s.settings.hands) finish(s, ctx);
     else startHand(s, ctx);
@@ -571,7 +571,7 @@ export const pokerTexas: GameModule<PokerState, PokerSettings> = {
 
   end(state: PokerState, ctx: GameContext): PokerState {
     if (state.phase === 'final') return state;
-    const s = structuredClone(state);
+    const s = JSON.parse(JSON.stringify(state));
     clearTurn(s, ctx);
     ctx.cancel(NEXT_HAND);
     s.phase = 'final';
