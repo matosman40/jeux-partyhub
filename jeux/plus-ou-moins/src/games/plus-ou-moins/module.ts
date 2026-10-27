@@ -127,6 +127,13 @@ function finish(s: PlusOuMoinsState, ctx: GameContext): PlusOuMoinsState {
   return { ...s, phase: 'final' };
 }
 
+/** Joueurs qui n’ont pas encore misé. */
+function pendingOf(s: PlusOuMoinsState): string[] {
+  return (s.phase === 'bet' ? Object.keys(s.players).filter((id) => !(id in s.bets)) : []).map(
+    (id) => s.players[id] ?? '?',
+  );
+}
+
 export const plusOuMoins: GameModule<PlusOuMoinsState, PlusOuMoinsSettings> = {
   manifest: {
     id: 'plus-ou-moins',
@@ -134,7 +141,7 @@ export const plusOuMoins: GameModule<PlusOuMoinsState, PlusOuMoinsSettings> = {
     name: 'Plus ou moins',
     description: 'Une carte est tirée : la suivante sera-t-elle plus haute ou plus basse ?',
     icon: '🃏',
-    version: '1.0.1',
+    version: '1.0.2',
     apiVersion: 1,
     minPlayers: 1,
     maxPlayers: 12,
@@ -246,6 +253,7 @@ export const plusOuMoins: GameModule<PlusOuMoinsState, PlusOuMoinsSettings> = {
       ranking: rankEntries(s.players, s.points),
       current: s.phase === 'ready' || s.phase === 'final' ? null : s.current,
       endsAt: s.endsAt,
+      pending: pendingOf(s),
     };
 
     if (s.phase === 'bet') {
@@ -288,8 +296,7 @@ export const plusOuMoins: GameModule<PlusOuMoinsState, PlusOuMoinsSettings> = {
   },
 
   getHostState(s) {
-    const pending = s.phase === 'bet' ? Object.keys(s.players).filter((id) => !(id in s.bets)) : [];
-    return { pending: pending.map((id) => s.players[id] ?? '?') };
+    return { pending: pendingOf(s) };
   },
 
   isFinished(s) {

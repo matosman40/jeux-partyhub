@@ -114,6 +114,17 @@ function finish(s: AssociationState, ctx: GameContext): AssociationState {
 
 const BOT_WORDS = ['Pizza', 'Fantôme', 'Chaussette', 'Tartiflette', 'Canard', 'Vacances', 'Brocoli', 'Licorne'];
 
+/** Joueurs que la salle attend encore (mots ou votes). */
+function pendingOf(s: AssociationState): string[] {
+  const missing =
+    s.phase === 'write'
+      ? Object.keys(s.players).filter((id) => !(id in s.words))
+      : s.phase === 'vote'
+        ? Object.keys(s.players).filter((id) => !(id in s.votes))
+        : [];
+  return missing.map((id) => s.players[id] ?? '?');
+}
+
 export const association: GameModule<AssociationState, AssociationSettings> = {
   manifest: {
     id: 'association',
@@ -121,7 +132,7 @@ export const association: GameModule<AssociationState, AssociationSettings> = {
     name: 'Association express',
     description: 'Écrivez le premier mot qui vous vient, puis votez pour le plus drôle.',
     icon: '💭',
-    version: '1.0.1',
+    version: '1.0.2',
     apiVersion: 1,
     minPlayers: 2,
     maxPlayers: 12,
@@ -245,6 +256,7 @@ export const association: GameModule<AssociationState, AssociationSettings> = {
       total: s.prompts.length,
       playerCount: Object.keys(s.players).length,
       ranking: rankEntries(s.players, s.points),
+      pending: pendingOf(s),
     };
 
     if (s.phase === 'ready' || s.phase === 'final') {
@@ -303,13 +315,7 @@ export const association: GameModule<AssociationState, AssociationSettings> = {
   },
 
   getHostState(s) {
-    const missing =
-      s.phase === 'write'
-        ? Object.keys(s.players).filter((id) => !(id in s.words))
-        : s.phase === 'vote'
-          ? Object.keys(s.players).filter((id) => !(id in s.votes))
-          : [];
-    return { pending: missing.map((id) => s.players[id] ?? '?') };
+    return { pending: pendingOf(s) };
   },
 
   isFinished(s) {

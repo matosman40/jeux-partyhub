@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "plus-ou-moins",
   "name": "Plus ou moins",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Une carte est tirée : la suivante sera-t-elle plus haute ou plus basse ?",
   "author": "PartyHub",
   "engine": {

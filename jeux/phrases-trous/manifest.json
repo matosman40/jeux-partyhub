@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "phrases-trous",
   "name": "Phrases à trous",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Remplissez le trou de la phrase avec la carte la plus drôle ou la plus juste, puis votez pour la meilleure. Les mots-clés de chacun servent de thème.",
   "author": "PartyHub",
   "engine": {

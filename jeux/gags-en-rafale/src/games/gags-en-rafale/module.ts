@@ -171,6 +171,13 @@ function resultsOf(s: GagsState): { playerId: string; name: string; success: boo
   }));
 }
 
+/** Joueurs qui n’ont pas encore envoyé leur réponse à ce tour. */
+function pendingOf(s: GagsState): string[] {
+  return Object.keys(s.players)
+    .filter((id) => !(id in s.submissions))
+    .map((id) => s.players[id] ?? '?');
+}
+
 export const gagsEnRafale: GameModule<GagsState, GagsSettings> = {
   manifest: {
     id: 'gags-en-rafale',
@@ -178,7 +185,7 @@ export const gagsEnRafale: GameModule<GagsState, GagsSettings> = {
     name: 'Gags en rafale',
     description: 'Des gags absurdes d’une seconde : glissez, tapez, gonflez, ou restez de marbre. Seul ou à plusieurs.',
     icon: '🤪',
-    version: '1.0.1',
+    version: '1.0.2',
     apiVersion: 1,
     minPlayers: 1,
     maxPlayers: 12,
@@ -309,6 +316,7 @@ export const gagsEnRafale: GameModule<GagsState, GagsSettings> = {
       endsAt: s.endsAt,
       revealEndsAt: s.revealEndsAt,
       players: Object.entries(s.players).map(([id, name]) => ({ id, name })),
+      pending: pendingOf(s),
       // Qui a déjà répondu à ce gag (sans le résultat, qui ne s’affiche qu’au bilan).
       submitted: Object.keys(s.submissions),
       results: s.phase === 'reveal' ? resultsOf(s) : null,
@@ -326,11 +334,7 @@ export const gagsEnRafale: GameModule<GagsState, GagsSettings> = {
   },
 
   getHostState(s) {
-    return {
-      pending: Object.keys(s.players)
-        .filter((id) => !(id in s.submissions))
-        .map((id) => s.players[id] ?? '?'),
-    };
+    return { pending: pendingOf(s) };
   },
 
   isFinished(s) {

@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "imposteur",
   "name": "L’Imposteur",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Un imposteur se cache parmi vous. Donnez des indices, puis démasquez-le.",
   "author": "PartyHub",
   "engine": {

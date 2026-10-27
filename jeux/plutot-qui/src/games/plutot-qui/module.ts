@@ -91,6 +91,13 @@ function finish(s: PlutotQuiState, ctx: GameContext): PlutotQuiState {
   return { ...s, phase: 'final' };
 }
 
+/** Joueurs qui n’ont pas encore voté. */
+function pendingOf(s: PlutotQuiState): string[] {
+  return (s.phase === 'vote' ? Object.keys(s.players).filter((id) => !(id in s.votes)) : []).map(
+    (id) => s.players[id] ?? '?',
+  );
+}
+
 export const plutotQui: GameModule<PlutotQuiState, PlutotQuiSettings> = {
   manifest: {
     id: 'plutot-qui',
@@ -98,7 +105,7 @@ export const plutotQui: GameModule<PlutotQuiState, PlutotQuiSettings> = {
     name: 'Plutôt qui ?',
     description: 'Qui est le plus susceptible de… ? Votez en secret et suivez la majorité.',
     icon: '👉',
-    version: '1.0.1',
+    version: '1.0.2',
     apiVersion: 1,
     minPlayers: 2,
     maxPlayers: 12,
@@ -207,6 +214,7 @@ export const plutotQui: GameModule<PlutotQuiState, PlutotQuiSettings> = {
       total: s.prompts.length,
       ranking: rankEntries(s.players, s.points),
       candidates: Object.entries(s.players).map(([id, name]) => ({ id, name })),
+      pending: pendingOf(s),
     };
 
     if (s.phase === 'ready' || s.phase === 'final') return { ...base, prompt: null };
@@ -249,8 +257,7 @@ export const plutotQui: GameModule<PlutotQuiState, PlutotQuiSettings> = {
   },
 
   getHostState(s) {
-    const pending = s.phase === 'vote' ? Object.keys(s.players).filter((id) => !(id in s.votes)) : [];
-    return { pending: pending.map((id) => s.players[id] ?? '?') };
+    return { pending: pendingOf(s) };
   },
 
   isFinished(s) {

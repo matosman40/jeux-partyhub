@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "funambule",
   "name": "Funambule",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tenez votre funambule sur le fil : penchez le téléphone pour contrer le vent.",
   "author": "PartyHub",
   "engine": {

@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "imite-moi",
   "name": "Imite-moi !",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Imitez une scène, photographiez-la ou enregistrez-la : les autres votent pour la meilleure.",
   "author": "PartyHub",
   "engine": {

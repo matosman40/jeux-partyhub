@@ -4,7 +4,7 @@
   "kind": "code",
   "id": "association",
   "name": "Association express",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Écrivez le premier mot qui vous vient, puis votez pour le plus drôle.",
   "author": "PartyHub",
   "engine": {
