@@ -44,10 +44,27 @@ jobs:
           npm run build -w @partyhub/server
 
       - name: Construire et vérifier le paquet
+        env:
+          SIGNING_KEY: ${{ secrets.PHGAME_SIGNING_KEY }}
         run: |
           GAME="${{ steps.tag.outputs.game }}"
-          node "$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js" pack "$GITHUB_WORKSPACE/jeux/$GAME" "$RUNNER_TEMP/$GAME.phgame"
-          node "$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js" check "$RUNNER_TEMP/$GAME.phgame"
+          CLI="$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js"
+          KIND="$(jq -r .kind "$GITHUB_WORKSPACE/jeux/$GAME/manifest.json")"
+          if [ "$KIND" = "code" ]; then
+            # Un jeu de code doit être signé : PartyHub refuse un paquet non signé.
+            if [ -z "$SIGNING_KEY" ]; then
+              echo "Secret PHGAME_SIGNING_KEY absent : un jeu de code doit être signé." >&2; exit 1
+            fi
+            umask 077
+            printf '%s\n' "$SIGNING_KEY" > "$RUNNER_TEMP/signing.key.pem"
+            openssl pkey -in "$RUNNER_TEMP/signing.key.pem" -pubout -out "$RUNNER_TEMP/signing.pub.pem"
+            node "$CLI" pack "$GITHUB_WORKSPACE/jeux/$GAME" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/signing.key.pem"
+            rm -f "$RUNNER_TEMP/signing.key.pem"
+            node "$CLI" check "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/signing.pub.pem"
+          else
+            node "$CLI" pack "$GITHUB_WORKSPACE/jeux/$GAME" "$RUNNER_TEMP/$GAME.phgame"
+            node "$CLI" check "$RUNNER_TEMP/$GAME.phgame"
+          fi
 
       - name: Empreinte
         run: |
