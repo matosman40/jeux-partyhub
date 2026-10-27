@@ -1,10 +1,18 @@
 name: Publier un jeu
 
-# Déclenché par un tag `<jeu>-vX.Y.Z` (exemple : frontieres-v1.2.0).
+# Déclenché de deux façons :
+# - par un tag `<jeu>-vX.Y.Z` poussé à la main (exemple : frontieres-v1.2.0) ;
+# - par le workflow « Étiqueter les jeux » (workflow_call), qui crée le tag quand un manifeste change sur main.
 # Le jeu est le dossier jeux/<jeu>/ ; le numéro du tag doit égaler `version` du manifeste.
 on:
   push:
     tags: ['*-v*']
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Tag à publier, de la forme <jeu>-vX.Y.Z'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -12,12 +20,14 @@ permissions:
 jobs:
   publier:
     runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - name: Lire le tag
         id: tag
         run: |
-          GAME="${GITHUB_REF_NAME%-v*}"
-          VERSION="${GITHUB_REF_NAME##*-v}"
+          GAME="${TAG%-v*}"
+          VERSION="${TAG##*-v}"
           if [[ ! "$GAME" =~ ^[a-z0-9][a-z0-9-]{1,47}$ ]]; then
             echo "Identifiant de jeu invalide : $GAME" >&2; exit 1
           fi
@@ -35,8 +45,17 @@ jobs:
           [ "$MANIFEST_VERSION" = "${{ steps.tag.outputs.version }}" ] || { echo "Le tag annonce ${{ steps.tag.outputs.version }}, le manifeste $MANIFEST_VERSION." >&2; exit 1; }
 
       - name: Préparer PartyHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PARTYHUB_REF: ${{ vars.PARTYHUB_REF }}
         run: |
-          git clone --depth 1 --branch "${{ vars.PARTYHUB_REF || 'v0.17.2' }}" https://github.com/matosman40/Partyhub.git "$RUNNER_TEMP/partyhub"
+          REF="$PARTYHUB_REF"
+          if [ -z "$REF" ]; then
+            # Sans variable : la dernière release de PartyHub, pour construire le jeu contre la version publiée.
+            REF="$(gh api repos/matosman40/partyhub/releases/latest --jq .tag_name)"
+          fi
+          echo "Construction contre PartyHub $REF"
+          git clone --depth 1 --branch "$REF" https://github.com/matosman40/Partyhub.git "$RUNNER_TEMP/partyhub"
           cd "$RUNNER_TEMP/partyhub"
           npm ci --ignore-scripts
           npm run build -w @partyhub/shared
@@ -77,4 +96,4 @@ jobs:
         run: |
           GAME="${{ steps.tag.outputs.game }}"
           # Pas de cd : --generate-notes lit l'historique du dépôt courant (l'espace de travail).
-          gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/$GAME.phgame.sha256" --title "$GAME ${{ steps.tag.outputs.version }}" --generate-notes
+          gh release create "$TAG" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/$GAME.phgame.sha256" --title "$GAME ${{ steps.tag.outputs.version }}" --generate-notes

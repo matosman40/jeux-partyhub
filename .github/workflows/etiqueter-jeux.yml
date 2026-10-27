@@ -1,0 +1,88 @@
+name: Étiqueter les jeux
+
+# Quand un manifeste de jeu change sur main, chaque jeu dont le tag `<jeu>-v<version>` n'existe pas encore
+# reçoit son tag sur le commit de main, puis est publié (publier.yml appelé directement : un tag créé avec
+# GITHUB_TOKEN ne déclenche pas les autres workflows). Un tag existant n'est jamais déplacé.
+# Pour republier un jeu, supprimer son tag puis relancer ce workflow (workflow_dispatch).
+on:
+  push:
+    branches: [main]
+    paths: ['jeux/*/manifest.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  detecter:
+    runs-on: ubuntu-latest
+    outputs:
+      jeux: ${{ steps.liste.outputs.jeux }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Lister les jeux dont la version n'a pas de tag
+        id: liste
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENEMENT: ${{ github.event_name }}
+          AVANT: ${{ github.event.before }}
+        run: |
+          # Un push ne traite que les manifestes modifiés par ce push (pas les anciennes versions non taguées).
+          # Le lancement manuel rattrape tous les jeux sans tag.
+          if [ "$EVENEMENT" = "workflow_dispatch" ]; then
+            MANIFESTES="$(ls jeux/*/manifest.json)"
+          else
+            BASE="$AVANT"
+            if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then BASE="HEAD~1"; fi
+            MANIFESTES="$(git diff --name-only "$BASE" "$GITHUB_SHA" -- 'jeux/*/manifest.json')"
+          fi
+          A_PUBLIER='[]'
+          while IFS= read -r manifest; do
+            # Un manifeste supprimé apparaît dans le diff mais n'existe plus : rien à publier.
+            [ -n "$manifest" ] && [ -f "$manifest" ] || continue
+            # Les dossiers commençant par « _ » (modèle de création) ne sont jamais publiés.
+            case "$manifest" in jeux/_*) continue ;; esac
+            ID="$(jq -r .id "$manifest")"
+            VERSION="$(jq -r .version "$manifest")"
+            TAG="$ID-v$VERSION"
+            if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" >/dev/null 2>&1; then
+              continue
+            fi
+            A_PUBLIER="$(jq -c --arg t "$TAG" '. + [$t]' <<<"$A_PUBLIER")"
+          done <<<"$MANIFESTES"
+          echo "jeux=$A_PUBLIER" >> "$GITHUB_OUTPUT"
+          echo "Jeux à publier : $A_PUBLIER"
+
+  etiqueter:
+    needs: detecter
+    if: needs.detecter.outputs.jeux != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        tag: ${{ fromJSON(needs.detecter.outputs.jeux) }}
+    steps:
+      - name: Créer le tag sur le commit de main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ matrix.tag }}
+        run: gh api "repos/$GITHUB_REPOSITORY/git/refs" -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA"
+
+  publier:
+    needs: [detecter, etiqueter]
+    if: needs.detecter.outputs.jeux != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        tag: ${{ fromJSON(needs.detecter.outputs.jeux) }}
+    uses: ./.github/workflows/publier.yml
+    permissions:
+      contents: write
+    with:
+      tag: ${{ matrix.tag }}
+    secrets: inherit
