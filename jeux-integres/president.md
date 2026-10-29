@@ -24,7 +24,7 @@ Le classique des soirées : montez en grade, de Trou du cul à Président.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `president`
 - Code source : `packages/games/src/president/module.ts` (dépôt PartyHub)
 

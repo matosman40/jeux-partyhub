@@ -22,7 +22,7 @@ Placer les 52 cartes sur les quatre fondations.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `solitaire`
 - Code source : `packages/games/src/solo/games.ts` (dépôt PartyHub)
 

@@ -22,7 +22,7 @@ Prévoir si la carte suivante sera plus haute ou plus basse.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `plus-ou-moins`
 - Code source : `packages/games/src/plus-ou-moins/module.ts` (dépôt PartyHub)
 

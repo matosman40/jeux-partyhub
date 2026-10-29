@@ -22,7 +22,7 @@ Démasquer l’imposteur, qui ne connaît pas le mot secret.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `imposteur`
 - Code source : `packages/games/src/imposteur/module.ts` (dépôt PartyHub)
 

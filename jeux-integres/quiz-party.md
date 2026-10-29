@@ -24,7 +24,7 @@ Répondre le plus vite et le plus juste aux questions pour marquer le plus de po
 
 ## Version
 
-- Version du jeu : 1.1.0
+- Version du jeu : 1.1.2
 - Identifiant : `quiz-party`
 - Code source : `packages/games/src/quiz-party/module.ts` (dépôt PartyHub)
 

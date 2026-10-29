@@ -23,7 +23,7 @@ Réussir le plus de défis, et le plus vite possible.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.1.1
 - Identifiant : `micro-defis`
 - Code source : `packages/games/src/micro-defis/module.ts` (dépôt PartyHub)
 

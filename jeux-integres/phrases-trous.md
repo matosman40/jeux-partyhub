@@ -24,7 +24,7 @@ Compléter chaque phrase avec la carte la plus drôle ou la plus juste, puis gag
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.3
 - Identifiant : `phrases-trous`
 - Code source : `packages/games/src/phrases-trous/module.ts` (dépôt PartyHub)
 

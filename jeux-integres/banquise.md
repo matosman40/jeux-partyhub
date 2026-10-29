@@ -24,7 +24,7 @@ Ne tombez pas à l’eau. Le dernier joueur resté sur la glace gagne chaque niv
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `banquise`
 - Code source : `packages/games/src/banquise/module.ts` (dépôt PartyHub)
 

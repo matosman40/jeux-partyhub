@@ -22,7 +22,7 @@ Trouver le mot le plus drôle pour une consigne, et recueillir des votes.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `association`
 - Code source : `packages/games/src/association/module.ts` (dépôt PartyHub)
 

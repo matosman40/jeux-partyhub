@@ -32,7 +32,7 @@ Le tarot à quatre : enchères, chien, écart et plis, un preneur contre trois d
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `tarot`
 - Code source : `packages/games/src/tarot/module.ts` (dépôt PartyHub)
 

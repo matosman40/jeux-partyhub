@@ -23,7 +23,7 @@ Traverser le fil le plus longtemps possible, sous un vent qui se renforce.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `funambule`
 - Code source : `packages/games/src/funambule/module.ts` (dépôt PartyHub)
 

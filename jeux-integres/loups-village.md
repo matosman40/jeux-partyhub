@@ -22,7 +22,7 @@ Les villageois démasquent tous les loups. Les loups dévorent le village jusqu�
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `loups-village`
 - Code source : `packages/games/src/loups-village/module.ts` (dépôt PartyHub)
 

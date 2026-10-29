@@ -22,7 +22,7 @@ Gagnez le plus de points sur cinq manches tirées au hasard.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `boum`
 - Code source : `packages/games/src/boum/module.ts` (dépôt PartyHub)
 

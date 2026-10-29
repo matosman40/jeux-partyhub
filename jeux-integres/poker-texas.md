@@ -22,7 +22,7 @@ Le poker Texas hold’em avec des jetons : blindes, mises, tapis et showdown.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `poker-texas`
 - Code source : `packages/games/src/poker/module.ts` (dépôt PartyHub)
 

@@ -22,7 +22,7 @@ Devenir le joueur le plus riche : liquidités, rues et maisons comptent.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `promoteur`
 - Code source : `packages/games/src/promoteur/module.ts` (dépôt PartyHub)
 

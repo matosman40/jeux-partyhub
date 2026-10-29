@@ -22,7 +22,7 @@ Voter comme la majorité, sur des questions du type « Qui… ? ».
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `plutot-qui`
 - Code source : `packages/games/src/plutot-qui/module.ts` (dépôt PartyHub)
 

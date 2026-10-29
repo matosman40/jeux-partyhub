@@ -23,7 +23,7 @@ Imiter, photographier ou enregistrer la scène proposée, puis voter pour la plu
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `imite-moi`
 - Code source : `packages/games/src/imite-moi/module.ts` (dépôt PartyHub)
 

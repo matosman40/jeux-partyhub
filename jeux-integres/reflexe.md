@@ -22,7 +22,7 @@ Attendez le vert… puis touchez votre téléphone le plus vite possible !
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `reflexe`
 - Code source : `packages/games/src/reflexe/module.ts` (dépôt PartyHub)
 

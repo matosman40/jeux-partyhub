@@ -21,7 +21,7 @@ Remettre les tuiles dans l’ordre, de 1 à la dernière, la case vide en bas à
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `taquin`
 - Code source : `packages/games/src/solo/games.ts` (dépôt PartyHub)
 

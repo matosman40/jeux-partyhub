@@ -23,7 +23,7 @@ Réussir le plus de gags, le plus vite possible. Seul, c’est un entraînement 
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `gags-en-rafale`
 - Code source : `packages/games/src/gags-en-rafale/module.ts` (dépôt PartyHub)
 

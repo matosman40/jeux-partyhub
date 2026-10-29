@@ -22,7 +22,7 @@ Remplir la grille 9×9 le plus vite possible.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `sudoku`
 - Code source : `packages/games/src/solo/games.ts` (dépôt PartyHub)
 

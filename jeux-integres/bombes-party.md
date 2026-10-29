@@ -25,7 +25,7 @@ Posez vos bombes, détruisez les caisses et soyez le dernier debout !
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `bombes-party`
 - Code source : `packages/games/src/bombes-party/module.ts` (dépôt PartyHub)
 

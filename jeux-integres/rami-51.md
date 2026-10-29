@@ -31,7 +31,7 @@ Se débarrasser de toutes ses cartes en posant des combinaisons, et finir la par
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.2
 - Identifiant : `rami-51`
 - Code source : `packages/games/src/rami51/module.ts` (dépôt PartyHub)
 

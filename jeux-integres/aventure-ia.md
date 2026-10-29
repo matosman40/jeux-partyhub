@@ -26,7 +26,7 @@ Atteindre l’objectif de l’aventure, sans que tous les personnages tombent.
 
 ## Version
 
-- Version du jeu : 1.2.0
+- Version du jeu : 1.2.1
 - Identifiant : `aventure-ia`
 - Code source : `packages/games/src/aventure/module.ts` (dépôt PartyHub)
 

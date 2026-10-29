@@ -21,7 +21,7 @@ Remplir toute la grille à partir des définitions.
 
 ## Version
 
-- Version du jeu : 1.0.0
+- Version du jeu : 1.0.1
 - Identifiant : `mots-croises`
 - Code source : `packages/games/src/solo/games.ts` (dépôt PartyHub)
 
