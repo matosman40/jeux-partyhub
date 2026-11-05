@@ -71,4 +71,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           GAME="${{ steps.tag.outputs.game }}"
-          gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/$GAME.phgame.sha256" --title "$GAME ${{ steps.tag.outputs.version }}" --notes "Paquet de code $GAME ${{ steps.tag.outputs.version }}, signé."
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/$GAME.phgame.sha256" --title "$GAME ${{ steps.tag.outputs.version }}" --notes "Paquet de code $GAME ${{ steps.tag.outputs.version }}, signé."
