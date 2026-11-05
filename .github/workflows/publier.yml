@@ -10,7 +10,24 @@ permissions:
   contents: write
 
 jobs:
+  aiguillage:
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.choix.outputs.code }}
+    steps:
+      - name: Savoir si le tag est un jeu de code
+        id: choix
+        run: |
+          GAME="${GITHUB_REF_NAME%-v*}"
+          if curl -sf -o /dev/null "https://raw.githubusercontent.com/matosman40/Partyhub/${{ vars.PARTYHUB_CODE_REF || 'feature/plateau-grille' }}/packages/games/code-games/$GAME/manifest.json"; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   publier:
+    needs: aiguillage
+    if: needs.aiguillage.outputs.code != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Lire le tag

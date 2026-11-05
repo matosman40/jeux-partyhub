@@ -1,24 +1,40 @@
 name: Publier un jeu de code
 
-# Déclenché par un tag `code/<jeu>-vX.Y.Z` (exemple : code/plus-ou-moins-v1.0.0).
-# Le jeu de code est construit depuis le dépôt PartyHub (packages/games/code-games/<jeu>/), signé, puis publié.
+# Déclenché par un tag `<jeu>-vX.Y.Z`, comme les autres paquets. Ce workflow ne traite que les jeux de code :
+# le job « aiguillage » vérifie qu'un dossier packages/games/code-games/<jeu> existe dans PartyHub.
 on:
   push:
-    tags: ['code/*-v*']
+    tags: ['*-v*']
 
 permissions:
   contents: write
 
 jobs:
+  aiguillage:
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.choix.outputs.code }}
+    steps:
+      - name: Savoir si le tag est un jeu de code
+        id: choix
+        run: |
+          GAME="${GITHUB_REF_NAME%-v*}"
+          if curl -sf -o /dev/null "https://raw.githubusercontent.com/matosman40/Partyhub/${{ vars.PARTYHUB_CODE_REF || 'feature/plateau-grille' }}/packages/games/code-games/$GAME/manifest.json"; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   publier:
+    needs: aiguillage
+    if: needs.aiguillage.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Lire le tag
         id: tag
         run: |
-          REF="${GITHUB_REF_NAME#code/}"
-          GAME="${REF%-v*}"
-          VERSION="${REF##*-v}"
+          GAME="${GITHUB_REF_NAME%-v*}"
+          VERSION="${GITHUB_REF_NAME##*-v}"
           if [[ ! "$GAME" =~ ^[a-z0-9][a-z0-9-]{1,47}$ ]]; then
             echo "Identifiant de jeu invalide : $GAME" >&2; exit 1
           fi
@@ -54,7 +70,6 @@ jobs:
           SRC="$RUNNER_TEMP/partyhub/packages/games/code-games/$GAME"
           CLI="$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js"
           [ -n "$SIGNING_KEY" ] || { echo "Secret PHGAME_SIGNING_KEY absent : un jeu de code doit être signé." >&2; exit 1; }
-          # Diagnostic sans jamais afficher la clé : taille du secret et présence du binaire PartyHub.
           echo "Secret reçu : ${#SIGNING_KEY} caractères, $(printf '%s' "$SIGNING_KEY" | grep -c BEGIN) ligne(s) BEGIN"
           test -f "$CLI" || { echo "Binaire PartyHub absent : $CLI" >&2; exit 1; }
           umask 077
