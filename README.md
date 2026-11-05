@@ -16,7 +16,7 @@ PartyHub peut importer et mettre à jour.
 
 ### Jeux intégrés à PartyHub
 
-Ces 28 jeux sont écrits dans le code de PartyHub : ils n'ont pas de dossier ici et ne se publient pas comme paquets. Chaque ligne renvoie vers sa fiche (règles, déroulement, conseils, journal de versions).
+Ces 29 jeux sont écrits dans le code de PartyHub : ils n'ont pas de dossier ici et ne se publient pas comme paquets. Chaque ligne renvoie vers sa fiche (règles, déroulement, conseils, journal de versions).
 
 | Jeu | Catégorie | Joueurs | Durée | Version | Fiche |
 |---|---|---|---|---|---|
@@ -48,6 +48,7 @@ Ces 28 jeux sont écrits dans le code de PartyHub : ils n'ont pas de dossier ici
 | 🧊 Banquise | Ambiance | 2–8 | 4 min | 1.0.0 | [`banquise.md`](jeux-integres/banquise.md) |
 | 💥 BOUM ! | Quiz | 2–12 | 12 min | 1.0.0 | [`boum.md`](jeux-integres/boum.md) |
 | 🧭 Plateau de test | Ambiance | 1–12 | 5 min | 1.0.0 | [`plateau-test.md`](jeux-integres/plateau-test.md) |
+| 📸 Photo mystère | Quiz | 1–12 | 10 min | 1.0.0 | [`photo-mystere.md`](jeux-integres/photo-mystere.md) |
 
 ## Structure
 

@@ -19,7 +19,7 @@ Répondre le plus vite et le plus juste aux questions pour marquer le plus de po
 ## Conseils
 
 - Une mauvaise réponse ne retire aucun point.
-- Le nombre de questions, le temps et la source des questions se règlent dans le salon, avant le lancement.
+- Le nombre de questions, le temps, la difficulté et la source des questions se règlent dans le salon, avant le lancement.
 - Sans IA configurée, le jeu reprend ses questions intégrées et le dit à l’écran.
 
 ## Version
