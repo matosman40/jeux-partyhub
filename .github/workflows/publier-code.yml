@@ -33,6 +33,7 @@ jobs:
           npm run build -w @partyhub/shared
           npm run build -w @partyhub/games
           npm run build -w @partyhub/server
+          npm run build -w @partyhub/web
 
       - name: Vérifier le dossier et la version
         run: |
