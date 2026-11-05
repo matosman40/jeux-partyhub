@@ -1,0 +1,70 @@
+name: Publier un jeu de code
+
+# Déclenché par un tag `code/<jeu>-vX.Y.Z` (exemple : code/plus-ou-moins-v1.0.0).
+# Le jeu de code est construit depuis le dépôt PartyHub (packages/games/code-games/<jeu>/), signé, puis publié.
+on:
+  push:
+    tags: ['code/*-v*']
+
+permissions:
+  contents: write
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lire le tag
+        id: tag
+        run: |
+          REF="${GITHUB_REF_NAME#code/}"
+          GAME="${REF%-v*}"
+          VERSION="${REF##*-v}"
+          if [[ ! "$GAME" =~ ^[a-z0-9][a-z0-9-]{1,47}$ ]]; then
+            echo "Identifiant de jeu invalide : $GAME" >&2; exit 1
+          fi
+          echo "game=$GAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Préparer PartyHub
+        run: |
+          git clone --depth 1 --branch "${{ vars.PARTYHUB_CODE_REF || 'feature/plateau-grille' }}" https://github.com/matosman40/Partyhub.git "$RUNNER_TEMP/partyhub"
+          cd "$RUNNER_TEMP/partyhub"
+          npm ci --ignore-scripts
+          npm run build -w @partyhub/shared
+          npm run build -w @partyhub/games
+          npm run build -w @partyhub/server
+
+      - name: Vérifier le dossier et la version
+        run: |
+          SRC="$RUNNER_TEMP/partyhub/packages/games/code-games/${{ steps.tag.outputs.game }}"
+          test -f "$SRC/manifest.json" || { echo "Jeu de code ${{ steps.tag.outputs.game }} introuvable dans PartyHub." >&2; exit 1; }
+          MANIFEST_ID=$(jq -r .id "$SRC/manifest.json")
+          MANIFEST_VERSION=$(jq -r .version "$SRC/manifest.json")
+          KIND=$(jq -r .kind "$SRC/manifest.json")
+          [ "$KIND" = "code" ] || { echo "Le manifeste doit être de type code (type : $KIND)." >&2; exit 1; }
+          [ "$MANIFEST_ID" = "${{ steps.tag.outputs.game }}" ] || { echo "Identifiant du manifeste ($MANIFEST_ID) différent du tag." >&2; exit 1; }
+          [ "$MANIFEST_VERSION" = "${{ steps.tag.outputs.version }}" ] || { echo "Le tag annonce ${{ steps.tag.outputs.version }}, le manifeste $MANIFEST_VERSION." >&2; exit 1; }
+
+      - name: Construire, signer et contrôler le paquet
+        env:
+          SIGNING_KEY: ${{ secrets.PHGAME_SIGNING_KEY }}
+        run: |
+          GAME="${{ steps.tag.outputs.game }}"
+          SRC="$RUNNER_TEMP/partyhub/packages/games/code-games/$GAME"
+          CLI="$RUNNER_TEMP/partyhub/packages/server/dist/cli/phgame.js"
+          [ -n "$SIGNING_KEY" ] || { echo "Secret PHGAME_SIGNING_KEY absent : un jeu de code doit être signé." >&2; exit 1; }
+          umask 077
+          printf '%s\n' "$SIGNING_KEY" > "$RUNNER_TEMP/signing.key.pem"
+          openssl pkey -in "$RUNNER_TEMP/signing.key.pem" -pubout -out "$RUNNER_TEMP/signing.pub.pem"
+          node "$CLI" pack "$SRC" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/signing.key.pem"
+          rm -f "$RUNNER_TEMP/signing.key.pem"
+          node "$CLI" check "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/signing.pub.pem"
+          cd "$RUNNER_TEMP"
+          sha256sum "$GAME.phgame" > "$GAME.phgame.sha256"
+
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          GAME="${{ steps.tag.outputs.game }}"
+          gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/$GAME.phgame" "$RUNNER_TEMP/$GAME.phgame.sha256" --title "$GAME ${{ steps.tag.outputs.version }}" --notes "Paquet de code $GAME ${{ steps.tag.outputs.version }}, signé."
